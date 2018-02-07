@@ -4,6 +4,7 @@
     验证库https://cerberus.readthedocs.io/en/stable/index.html
 '''
 from app.config import DEBUG_LOG
+from app.Vendor.CustomErrorHandler import CustomErrorHandlers
 from flask import request, jsonify
 import cerberus
 import logging
@@ -11,39 +12,25 @@ import time
 import json
 
 
-class CustomErrorHandler(cerberus.errors.BasicErrorHandler):
-    def __init__(self, tree=None, custom_messages=None):
-        super(CustomErrorHandler, self).__init__(tree)
-        self.custom_messages = custom_messages or {}
-
-    def format_message(self, field, error):
-        tmp = self.custom_messages
-        for x in error.schema_path:
-            try:
-                tmp = tmp[x]
-            except KeyError:
-                return super(CustomErrorHandler, self).format_message(
-                    field, error)
-        if isinstance(tmp, dict):
-            return super(CustomErrorHandler, self).format_message(field, error)
-        else:
-            return tmp
-
-
-class Controller:
+class BaseController:
 
     ''' 
     * 验证输入信息
     * @param  array $rules
     * @return response
     '''
-    def validateInput(self, rules, error_msg=''):
-        v = cerberus.validator(
-            rules, error_handler=CustomErrorHandler(custom_messages={error_msg}))
-        requests = request.args
+
+    def validateInput(self, rules, error_msg=None):
+        v = cerberus.Validator(
+            rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
+        requests = request.args.to_dict()
         if (v.validate(requests)):
             return True
-        return v.errors
+        error = {}
+        error['msg'] = v.errors
+        error['error_code'] = 400
+        error['error'] = True
+        return self.json(error)
 
     def log(self):
         logger = logging.getLogger("error_msg")
