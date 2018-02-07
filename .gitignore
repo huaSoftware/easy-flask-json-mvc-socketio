@@ -2,3 +2,4 @@
 /app/Controllers/__pycache__
 /app/Models/__pycache__
 /app/Vendor/__pycache__
+/app/Middleware/__pycache__

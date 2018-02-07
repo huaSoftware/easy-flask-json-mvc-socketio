@@ -6,7 +6,9 @@
 from app import app
 from app.Models.Music import Music
 from app.Controllers.BaseController import BaseController
+from app.Middleware.XSSProtection import XSSProtection
 from flask import request
+
 
 ''' 测试接口 '''
 
@@ -14,19 +16,20 @@ from flask import request
 @app.route('/test', methods=['GET'])
 def index():
     rules = {
-        'name': {'type': 'integer', 'minlength': 10, 'maxlength': 20}
+        'name': {'type': 'string', 'minlength': 10, 'maxlength': 20}
     }
     error_msg = {
         'name': {
             'type': u'姓名必须是整形',
-            'minlength': u'姓名必须大于10',
-            'maxlength': u'姓名必须小于20'
+            'minlength': u'姓名必须小于10',
+            'maxlength': u'姓名必须大于20'
         }
     }
     error = BaseController().validateInput(rules, error_msg)
     if(error is not True):
         return error
-    return BaseController().successData()
+    return BaseController().successData(g.requests['name'])
+
 
 ''' 歌曲名字 '''
 

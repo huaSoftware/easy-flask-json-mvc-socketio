@@ -22,7 +22,7 @@ class BaseController:
 
     def validateInput(self, rules, error_msg=None):
         v = cerberus.Validator(
-            rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
+            rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))  
         requests = request.args.to_dict()
         if (v.validate(requests)):
             return True
