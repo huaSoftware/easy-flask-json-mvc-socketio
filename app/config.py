@@ -1,0 +1,4 @@
+SQLALCHEMY_DATABASE_URI = 'mysql://root:1993524@localhost:3306/text?charset=utf8'
+SQLALCHEMY_TRACK_MODIFICATIONS = True
+
+DEBUG_LOG = True
