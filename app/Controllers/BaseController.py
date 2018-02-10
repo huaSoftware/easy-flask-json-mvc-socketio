@@ -3,7 +3,7 @@
     基础控制器，封装一些基础方法 
     验证库https://cerberus.readthedocs.io/en/stable/index.html
 '''
-from app.config import DEBUG_LOG
+from app.env import DEBUG_LOG
 from app.Vendor.CustomErrorHandler import CustomErrorHandlers
 from flask import request, jsonify
 import cerberus
@@ -22,8 +22,8 @@ class BaseController:
 
     def validateInput(self, rules, error_msg=None):
         v = cerberus.Validator(
-            rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))  
-        requests = request.args.to_dict()
+            rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
+        requests = request.values.to_dict()
         if (v.validate(requests)):
             return True
         error = {}
@@ -78,6 +78,10 @@ class BaseController:
 
     def successData(self, msg=''):
         return self.json({'error_code': 200, 'msg': msg})
+
+    def successDataToMsgJson(self, msg=''):
+        msg['error_code'] = 200
+        return self.json(msg)
 
     def uniqid(self, prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]

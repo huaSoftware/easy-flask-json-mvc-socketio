@@ -2,10 +2,7 @@
     date:2018.2.6
     基础模型，封装一些基础方法 
 '''
-from app import app
-from app import db
-from flask import request, jsonify, abort
-import time
+import logging
 
 
 class BaseModel():
@@ -58,3 +55,21 @@ class BaseModel():
         logger.addHandler(ch)
         logger.addHandler(fh)
         return logger
+
+    @staticmethod
+    def class_to_dict(obj):
+        '''把对象(支持单个对象、list、set)转换成字典'''
+        is_list = obj.__class__ == [].__class__
+        is_set = obj.__class__ == set().__class__
+        if is_list or is_set:
+            obj_arr = []
+            for o in obj:
+                # 把Object对象转换成Dict对象
+                dict = {}
+                dict.update(o.__dict__)
+                obj_arr.append(dict)
+                return obj_arr
+        else:
+            dict = {}
+            dict.update(obj.__dict__)
+            return dict

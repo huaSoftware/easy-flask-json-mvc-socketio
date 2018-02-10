@@ -28,7 +28,7 @@ def index():
     error = BaseController().validateInput(rules, error_msg)
     if(error is not True):
         return error
-    return BaseController().successData(g.requests['name'])
+    return BaseController().successData()
 
 
 ''' 歌曲名字 '''
@@ -39,8 +39,8 @@ def music_index():
     if 'id' in request.args:
         mus = Music.song_name(request.args['id'])
     else:
-        return BaseController.error()
-    return BaseController.successData(mus)
+        return BaseController().error()
+    return BaseController().successData(mus)
 
 
 ''' 歌曲结果 '''
@@ -51,8 +51,8 @@ def music_result():
     if 'id' in request.args:
         res = Music.music_name(request.args['id'])
     else:
-        return BaseController.error()
-    return BaseController.successData(res)
+        return BaseController().error()
+    return BaseController().successData(res)
 
 
 ''' 歌曲名字非中文 '''
@@ -63,5 +63,5 @@ def music_audio():
     if 'name' in request.args:
         aud = Music.song(request.args['name'])
     else:
-        return BaseController.error()
-    return BaseController.successData(aud)
+        return BaseController().error()
+    return BaseController().successData(aud)

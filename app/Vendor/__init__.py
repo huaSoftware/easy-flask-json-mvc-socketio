@@ -1,1 +1,1 @@
-__all__ = ['CustomErrorHandler']
+__all__ = ['CustomErrorHandler', 'UsersAuthJWT']
