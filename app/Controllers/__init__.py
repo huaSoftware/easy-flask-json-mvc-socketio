@@ -1,1 +1,3 @@
-__all__ = ['MusicController', 'UsersController', 'BaseController']
+__all__ = [
+    'MusicController', 'UsersController', 'BaseController', 'SocketController'
+]
