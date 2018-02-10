@@ -1,4 +1,5 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<div id='test'> </div>
 <script type="text/javascript" charset="utf-8">
     var socket = io.connect('http://127.0.0.1:500/test');
     //发送消息
@@ -6,9 +7,10 @@
 
 
 	//监听回复的消息
-	socket.on('my response',function(data){
-
-			alert(data.data);
+	socket.on('my_response',function(data){
+	
+			document.getElementById('test').innerHTML = data.count
+			//alert(data.count);
 	
 	});
 </script>
