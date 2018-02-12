@@ -1,16 +1,12 @@
 <script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
 <div id='test'> </div>
 <script type="text/javascript" charset="utf-8">
     var socket = io.connect('http://127.0.0.1:500/test');
-    //发送消息
-	socket.emit('connect',{'param':'value'});
-
-
+	socket.emit('my_request',{'data':'test'});
 	//监听回复的消息
-	socket.on('my_response',function(data){
-	
-			document.getElementById('test').innerHTML = data.count
-			//alert(data.count);
-	
+	socket.on('my_request',function(data){	
+		document.getElementById('test').innerHTML = data.count
+		//alert(data.count);
 	});
 </script>

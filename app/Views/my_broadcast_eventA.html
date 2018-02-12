@@ -1,0 +1,19 @@
+<script type="text/javascript" src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/1.3.6/socket.io.min.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+输入框:<input id="inputVal" type="text" name='data'>
+<div id='test'> </div>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://127.0.0.1:500/test');
+    //发送消息
+	$('#inputVal').keydown(function(event){ 
+		if(event.keyCode==13){ 
+			socket.emit('my_broadcast_event',{'data':$('#inputVal').val()});
+		}
+	});
+
+	//监听回复的消息
+	socket.on('my_broadcast_event',function(data){	
+		document.getElementById('test').innerHTML = data.msg
+		//alert(data.count);
+	});
+</script>
