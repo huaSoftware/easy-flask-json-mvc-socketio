@@ -14,3 +14,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = SQLALCHEMY_TRACK_MODIFICATIONS
 # 初始化
 db = SQLAlchemy(app)
 from app.Controllers import *
+# 蓝图，新增的后台部分代码,重复引入Controllers层的AdminController,建议更换控制层解决
+from app.AdminControllers.AdminController import admin
+app.register_blueprint(admin, url_prefix='/admin')
