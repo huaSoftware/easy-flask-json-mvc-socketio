@@ -73,3 +73,19 @@ class BaseModel():
             dict = {}
             dict.update(obj.__dict__)
             return dict
+
+
+    ''' 
+    * 用于sql结果列表类型转字典
+    * @param list data
+    * @return dict
+    '''
+    @staticmethod
+    def db_l_to_d(data):
+        data_list = []
+        for val in data:
+            val_dict = val.to_dict()
+            data_list.append(val_dict)
+        data_msg = {}
+        data_msg['msg'] = data_list
+        return data_msg

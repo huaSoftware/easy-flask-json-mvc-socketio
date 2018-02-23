@@ -16,7 +16,8 @@ class BaseController:
 
     ''' 
     * 验证输入信息
-    * @param  array $rules
+    * @param  dict rules
+    * @param  string error_msg
     * @return response
     '''
 
@@ -53,12 +54,10 @@ class BaseController:
 
     '''
     * 返回Json数据
-    * @param  array   $data
-    * @param  array   $ext
-    * @param  array   $paged
+    * @param  dict body
     * @return json
     '''
-    def json(self, body=''):
+    def json(self, body={}):
         if (DEBUG_LOG):
             debug_id = self.uniqid()
             self.log().error(
@@ -85,3 +84,19 @@ class BaseController:
 
     def uniqid(self, prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]
+
+
+    ''' 
+    * 用于sql结果列表类型转字典
+    * @param list data
+    * @return dict
+    '''
+    @staticmethod
+    def db_l_to_d(data):
+        data_list = []
+        for val in data:
+            val_dict = val.to_dict()
+            data_list.append(val_dict)
+        data_msg = {}
+        data_msg['msg'] = data_list
+        return data_msg

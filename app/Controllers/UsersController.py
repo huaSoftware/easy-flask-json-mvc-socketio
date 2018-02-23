@@ -1,6 +1,7 @@
 from app import app
 from app.Controllers.BaseController import BaseController
 from app.Models.Users import Users
+from app.Models.Suggest import Suggest
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from flask import request
 ''' 注册 '''
@@ -61,9 +62,10 @@ def login():
         return BaseController().successData(result)
 
 
-''' 获取用户信息 
-jwt中修改error处理方法,统一响应头
-_default_jwt_error_handler
+'''
+*获取用户信息 
+*jwt中修改error处理方法,统一响应头
+*_default_jwt_error_handler
 '''
 
 
@@ -81,3 +83,30 @@ def get():
             'login_time': user.updated_at
         }
     return BaseController().successDataToMsgJson(returnUser)
+
+
+''' 查询用户留言记录，一对多
+'''
+
+
+@app.route('/user/suggest', methods=['GET'])
+def userSuggest():
+    data_msg = Suggest.on_to_many()
+    return BaseController().successDataToMsgJson(data_msg)
+
+# join
+
+
+@app.route('/user/suggest/join', methods=['GET'])
+def userSuggestJoin():
+    data_msg = Suggest.join()
+    return BaseController().successDataToMsgJson(data_msg)
+
+# left join
+# 如果想使用right join的话 把类颠倒下即可。
+
+
+@app.route('/user/suggest/left', methods=['GET'])
+def userSuggestLeft():
+    data_msg = Suggest.leftJoin()
+    return BaseController().successDataToMsgJson(data_msg)

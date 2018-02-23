@@ -4,9 +4,10 @@ import re
 import base64
 from app import db
 from app.Models.BaseModel import BaseModel
+from sqlalchemy_serializer import SerializerMixin
 
 
-class Music(BaseModel, db.Model):
+class Music(BaseModel, db.Model, SerializerMixin):
     __tablename__ = 'music'
     id = db.Column(db.Integer, primary_key=True)
     add_time = db.Column(db.Integer)

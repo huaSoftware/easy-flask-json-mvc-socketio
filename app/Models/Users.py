@@ -32,13 +32,17 @@ class Users(db.Model, BaseModel, SerializerMixin):
     def get(id):
         return Users.query.filter_by(id=id).first()
 
+    # 增加
     def add(self, user):
         db.session.add(user)
         return db.session.commit()
 
-    def update(self):
-        return db.session.commit()
-
+    # 删除
     def delete(self, id):
         self.query.filter_by(id=id).delete()
+        return db.session.commit()
+
+    # 更新
+    def update(self, id, password):
+        self.query.filter(id=id).update({'password': password})
         return db.session.commit()
