@@ -78,7 +78,7 @@ class BaseController:
     def successData(self, msg=''):
         return self.json({'error_code': 200, 'msg': msg})
 
-    def successDataToMsgJson(self, msg=''):
+    def successDataToMsgJson(self, msg={}):
         msg['error_code'] = 200
         return self.json(msg)
 

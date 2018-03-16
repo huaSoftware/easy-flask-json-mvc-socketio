@@ -24,8 +24,8 @@ def register():
     error_msg = {
         'name': {
             'type': u'姓名必须是字符串',
-            'minlength': u'姓名必须小于20',
-            'maxlength': u'姓名必须大于10'
+            'minlength': u'姓名必须大于10',
+            'maxlength': u'姓名必须小于20'
         },
         'password': {
             'type': u'密码必须是字符串',

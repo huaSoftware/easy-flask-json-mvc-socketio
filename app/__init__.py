@@ -4,6 +4,7 @@ from flask_socketio import SocketIO
 from app.env import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS
 import pymysql
 pymysql.install_as_MySQLdb()
+#普通json带error_code风格使用此app示例
 app = Flask(__name__)
 # 实例化websocket
 async_mode = None
