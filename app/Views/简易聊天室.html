@@ -1,0 +1,50 @@
+﻿<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+</head>
+<body>
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+<script src="http://code.jquery.com/jquery-latest.js"></script>
+输入框:<input id="inputVal"  type="text" name='data'>
+<button type="button" id='leave'>Click Me leave up!</button>
+<div id='test'> </div>
+<script type="text/javascript" charset="utf-8">
+    var socket = io.connect('http://127.0.0.1:501/ChatRoom');
+	var name = prompt('请输入姓名');
+	socket.emit('join',{'room':'1','name':name});
+    //发送消息
+	$('#inputVal').keydown(function(event){ 
+		if(event.keyCode==13){ 
+			socket.emit('chat',{'msg':$('#inputVal').val(),'room':'1','name':name});
+		}
+	});
+	
+	$('#leave').click(function(){
+		socket.emit('leave',{'room':'1','name':name});
+	})
+	
+	///监听回复的消息
+	socket.on('join',function(data){
+		console.log(data);
+		$('#test').prepend( "<p>"+data.room+"</p>");
+		//alert(data.count);	
+	});
+	
+	//监听回复的消息
+	socket.on('leave',function(data){
+		console.log(data);
+		$('#test').prepend('<p>'+data.room+'</p>');
+		//alert(data.count);	
+	});
+	
+	///监听回复的消息
+	socket.on('chat',function(data){
+		console.log(data);
+		$('#test').prepend('<p>'+data.name+':'+data.msg+'</p>');
+		//alert(data.count);	
+	});
+	
+</script>
+</body>
+</html>

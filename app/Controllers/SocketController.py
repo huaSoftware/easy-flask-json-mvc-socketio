@@ -52,11 +52,11 @@ def give_response(message):
 
 @socketio.on('my_broadcast_event', namespace='/test')
 def test_broadcast_message(message):
-    session['receive_count'] = session.get('receive_count', 0) + 1
+    session['receive_count'] = session.get('receive_count', 0) + 1   
     emit(
         'my_broadcast_event',
         {'msg': message['data'],
-         'count': session['receive_count']},
+        'count': session['receive_count']},
         broadcast=True)
 
 
@@ -65,25 +65,31 @@ def test_broadcast_message(message):
  '''
 
 
-@socketio.on('join', namespace='/test')
+@socketio.on('join', namespace='/ChatRoom')
 def join(message):
+    name = message['name']
     room = message['room']
     join_room(room)
     session['receive_count'] = session.get('receive_count', 0) + 1
     emit(
-        'join',
-        {'room': 'Welcome to: ' + room,
-         'count': session['receive_count']},
+        'join', {
+            'room': 'Welcome %s into the room %s' % (name, room),
+            'count': session['receive_count']
+        },
         room=room)
 
 
-@socketio.on('leave', namespace='/test')
+@socketio.on('leave', namespace='/ChatRoom')
 def leave(message):
+    name = message['name']
     room = message['room']
     leave_room(room)
-    emit('leave', {'room': 'leave up: '+room}, room=room)
+    emit('leave', {'room': '%s leave up room %s ' % (name, room)}, room=room)
 
 
-@socketio.on('chat', namespace='/test')
+@socketio.on('chat', namespace='/ChatRoom')
 def chat(message):
-    emit('chat', {'data': message['msg']}, room=message['room'])
+    name = message['name']
+    msg = message['msg']
+    emit('chat', {'msg': msg, 'name': name}, room=message['room'])
+
