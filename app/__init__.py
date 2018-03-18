@@ -7,7 +7,7 @@ pymysql.install_as_MySQLdb()
 #普通json带error_code风格使用此app示例
 app = Flask(__name__)
 # 实例化websocket
-async_mode = None
+async_mode = 'gevent'
 socketio = SocketIO(app, async_mode=async_mode)
 # 配置 sqlalchemy  数据库驱动://数据库用户名:密码@主机地址:端口/数据库?编码
 app.config['SQLALCHEMY_DATABASE_URI'] = SQLALCHEMY_DATABASE_URI
