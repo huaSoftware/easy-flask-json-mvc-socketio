@@ -3,7 +3,7 @@
     基础控制器，封装一些基础方法 
     验证库https://cerberus.readthedocs.io/en/stable/index.html
 '''
-from app.env import DEBUG_LOG
+from app.env import DEBUG_LOG, MAX_CONTENT_LENGTH, ALLOWED_EXTENSIONS
 from app.Vendor.CustomErrorHandler import CustomErrorHandlers
 from flask import request, jsonify
 import cerberus
@@ -100,3 +100,10 @@ class BaseController:
         data_msg = {}
         data_msg['msg'] = data_list
         return data_msg
+
+
+    """ 验证文件类型 """
+    @staticmethod
+    def allowed_file(filename):
+        return '.' in filename and \
+            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS

@@ -4,6 +4,8 @@ from app.Models.Users import Users
 from app.Models.Suggest import Suggest
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from flask import request
+from werkzeug.utils import secure_filename
+import os
 ''' 注册 '''
 
 
@@ -94,6 +96,7 @@ def userSuggest():
     data_msg = Suggest.on_to_many()
     return BaseController().successDataToMsgJson(data_msg)
 
+
 # join
 
 
@@ -110,3 +113,19 @@ def userSuggestJoin():
 def userSuggestLeft():
     data_msg = Suggest.leftJoin()
     return BaseController().successDataToMsgJson(data_msg)
+
+    
+""" 上传文件并验证
+    https://zhuanlan.zhihu.com/p/23731819?refer=flask
+"""
+@app.route('/document/upload', methods=['POST'])
+def documentUpload():
+    files = request.files['document']
+    filename = secure_filename(files.filename)
+    if(files and BaseController.allowed_file(filename)):
+        path = os.getcwd()+"/uploads/"+filename
+        files.save(path)
+        return '你成功走通了'
+    #size = len(files.read())
+    return '文件类型错误'
+
