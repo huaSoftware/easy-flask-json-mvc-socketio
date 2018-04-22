@@ -8,11 +8,12 @@ class Suggest(BaseModel, db.Model, SerializerMixin):
     __tablename__ = 'suggest'
     id = db.Column(db.Integer, primary_key=True)
     add_time = db.Column(db.Integer)
+    #外键申明
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
-    # 外键对象，不会生成数据库实际字段
+    #user表虚拟对象，关联的内容会在user对象中
     User = db.relationship('Users')
     message = db.Column(db.String(255))
-
+    
     # 一对多普通方式
     @staticmethod
     def on_to_many():

@@ -15,7 +15,10 @@ class Users(db.Model, BaseModel, SerializerMixin):
     remember_token = db.Column(db.String(100), nullable=True)
     created_at = db.Column(db.Integer, nullable=True)
     updated_at = db.Column(db.Integer, nullable=True)
-    img_path = db.Column(db.String(100), nullable=True)
+    # 描述suggest表关系，第一个参数是参照类,要引用的表，
+    # 第二个参数是backref为类Suggest申明的新方法，backref为定义反向引用，
+    # 第三个参数lazy是决定什么时候sqlalchemy从数据库中加载数据
+    suggest = db.relationship('Suggest', backref='users', lazy='dynamic')
 
     def __str__(self):
         return "User(id='%s')" % self.id
