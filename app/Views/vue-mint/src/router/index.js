@@ -5,7 +5,7 @@ const _import = require('./_import_' + process.env.NODE_ENV)
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
@@ -16,8 +16,23 @@ export default new Router({
     {
       path: '/home', // 路径
       name: 'home', // 给他个名字，后期路由传参用
-      component: _import('home/index'), // 载入组件
-      meta: { title: '首页' } // 定义一些公共状态，你喜欢就好
+      component: _import('home/guide'), // 载入组件
+      meta: { title: '引导页' } // 定义一些公共状态，你喜欢就好
+    },
+    {
+      path: '/home/index',
+      name: 'home.index',
+      component: _import('home/index/index'),
+      meta: { title: '首页' }
     }
   ]
 })
+
+// 在每个路由前执行一些东西，中间件啊，多好啊，美妙啊，棒棒哒~
+router.beforeEach((to, from, next) => {
+  if (to.meta.title) {
+    document.title = to.meta.title
+  }
+  next()
+})
+export default router

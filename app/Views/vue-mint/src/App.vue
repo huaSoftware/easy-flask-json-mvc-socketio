@@ -10,13 +10,7 @@ export default {
 }
 </script>
 
-<style>
-html,body{
-  width: 100%;
-  height: 100%;
-  margin: 0px;
-  padding: 0px;
-}
+<style lang="less" scoped>
 #app {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;

@@ -11,7 +11,7 @@
 <script>
 export default {
   //第一个详细讲
-  name: 'home',// 给你的组件一个名字，有些地方需要
+  name: 'guide',// 给你的组件一个名字，有些地方需要
   // 划重点了，生命周期，不了解的看这https://segmentfault.com/a/1190000008010666
   beforeCreate() {},// 组件实例刚被创建，组件属性计算值前，容易data属性等
   created() {},// 组件实例创建完成，属性已经绑定，dom还没生成，$el属性还不存在
@@ -35,7 +35,7 @@ export default {
        if(this.hp < 0){
          alert('成功打败史莱姆')
          //方法路由回到helloWorld
-         this.$router.push('/')
+         this.$router.push('/home/index')
        }
     },
   },
