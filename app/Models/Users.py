@@ -46,6 +46,7 @@ class Users(db.Model, BaseModel, SerializerMixin):
         return db.session.commit()
 
     # 更新
-    def update(self, id, password):
-        self.query.filter(id=id).update({'password': password})
+    @staticmethod
+    def update(email, password):
+        Users.query.filter(email=email).update({'password': password})
         return db.session.commit()

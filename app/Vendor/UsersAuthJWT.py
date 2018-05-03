@@ -66,7 +66,7 @@ class UsersAuthJWT():
             if (Users.check_password(userInfo.password, password)):
                 updated_at = int(time.time())
                 userInfo.updated_at = updated_at
-                Users.update(Users)
+                Users.update(email, password)
                 token = self.encode_auth_token(userInfo.id, updated_at)
                 return token.decode()
             else:
