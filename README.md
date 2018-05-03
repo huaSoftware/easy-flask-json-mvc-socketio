@@ -15,4 +15,4 @@
   app/Controllers/UsersController.py(接收模型层返回值返回)<br />
 
 二.前端vue程序运行流程：<br/>
-   暂时不更新
+   采用webpack，vue,mint-ui技术的前端解决方案

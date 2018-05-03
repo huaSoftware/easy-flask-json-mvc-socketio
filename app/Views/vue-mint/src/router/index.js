@@ -17,13 +17,19 @@ const router = new Router({
       path: '/home', // 路径
       name: 'home', // 给他个名字，后期路由传参用
       component: _import('home/guide'), // 载入组件
-      meta: { title: '引导页' } // 定义一些公共状态，你喜欢就好
+      meta: { title: '引导页', header: false, back: false, more: false, footer: false } // 定义一些公共状态，你喜欢就好
     },
     {
       path: '/home/index',
       name: 'home.index',
       component: _import('home/index/index'),
-      meta: { title: '首页' }
+      meta: { title: '首页', header: true, back: true, more: true, footer: true }
+    },
+    {
+      path: '/mine',
+      name: 'mine',
+      component: _import('mime/index'),
+      meta: { title: '我的', header: true, back: true, more: true, footer: true }
     }
   ]
 })
