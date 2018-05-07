@@ -14,11 +14,13 @@ import os
 def register():
     rules = {
         'email': {
+            'required': True,
             'type': 'string',
             'minlength': 10,
             'maxlength': 20
         },
         'password': {
+            'required': True,
             'type': 'string',
             'minlength': 6,
             'maxlength': 20
@@ -26,11 +28,13 @@ def register():
     }
     error_msg = {
         'email': {
+            'required': u'邮箱是必须的',
             'type': u'邮箱必须是字符串',
             'minlength': u'邮箱必须大于10',
             'maxlength': u'邮箱必须小于20'
         },
         'password': {
+            'required': u'密码是必须的',
             'type': u'密码必须是字符串',
             'minlength': u'密码必须大于6',
             'maxlength': u'密码必须小于20'

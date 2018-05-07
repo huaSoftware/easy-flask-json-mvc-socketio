@@ -23,29 +23,32 @@ class Users(db.Model, BaseModel, SerializerMixin):
     def __str__(self):
         return "User(id='%s')" % self.id
 
+    #设置密码
     @staticmethod
     def set_password(password):
         return generate_password_hash(password)
 
+    #校验密码
     @staticmethod
     def check_password(hash_password, password):
         return check_password_hash(hash_password, password)
 
+    #获取用户信息
     @staticmethod
     def get(id):
         return Users.query.filter_by(id=id).first()
 
-    # 增加
+    # 增加用户
     def add(self, user):
         db.session.add(user)
         return db.session.commit()
 
-    # 删除
+    # 根据id删除用户
     def delete(self, id):
         self.query.filter_by(id=id).delete()
         return db.session.commit()
 
-    # 更新
+    # 更新密码
     @staticmethod
     def update(email, password):
         Users.query.filter_by(email=email).update({'password': password})

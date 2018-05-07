@@ -3,7 +3,7 @@ from app.env import SECRET_KEY, JWT_LEEWAY
 import datetime
 import jwt
 import time
-''' login登录验证在此做 '''
+''' JWT工具函数在这 '''
 
 
 class UsersAuthJWT():
