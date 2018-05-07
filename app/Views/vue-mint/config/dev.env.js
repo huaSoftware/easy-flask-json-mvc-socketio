@@ -3,5 +3,7 @@ const merge = require('webpack-merge')
 const prodEnv = require('./prod.env')
 
 module.exports = merge(prodEnv, {
-  NODE_ENV: '"development"'
+  NODE_ENV: '"development"',
+  // 指向我们的flask api
+  BASE_API: '"http://127.0.0.1:500"'
 })

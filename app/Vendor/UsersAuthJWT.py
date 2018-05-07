@@ -53,7 +53,8 @@ class UsersAuthJWT():
         except jwt.InvalidTokenError:
             return '无效Token'
 
-    def authenticate(self, email, password):
+    @staticmethod
+    def authenticate(email, password):
         """
         用户登录，登录成功返回token，写将登录时间写入数据库；登录失败返回失败原因
         :param password:
@@ -67,7 +68,7 @@ class UsersAuthJWT():
                 updated_at = int(time.time())
                 userInfo.updated_at = updated_at
                 Users.update(email, password)
-                token = self.encode_auth_token(userInfo.id, updated_at)
+                token = UsersAuthJWT.encode_auth_token(userInfo.id, updated_at)
                 return token.decode()
             else:
                 return '密码不正确'

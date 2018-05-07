@@ -28,7 +28,7 @@ const router = new Router({
     {
       path: '/mine',
       name: 'mine',
-      component: _import('mime/index'),
+      component: _import('mine/index'),
       meta: { title: '我的', header: true, back: true, more: true, footer: true }
     }
   ]

@@ -24,7 +24,8 @@ class BaseController:
     def validateInput(self, rules, error_msg=None):
         v = cerberus.Validator(
             rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
-        requests = request.values.to_dict()
+        """ 这边修改成json格式接收参数 """
+        requests = request.get_json()
         if (v.validate(requests)):
             return True
         error = {}

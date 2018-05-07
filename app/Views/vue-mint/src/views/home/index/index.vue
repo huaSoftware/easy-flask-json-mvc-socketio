@@ -56,7 +56,6 @@ export default {
 </script>
 <style lang="less" scoped>
 .mint-swipe{
-  margin-top: 40px;
   width:100%;
   height:30%;
 }

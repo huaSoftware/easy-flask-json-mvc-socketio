@@ -10,7 +10,7 @@ import os
 ''' 注册 '''
 
 
-@app.route('/register', methods=['POST'])
+@app.route('/api/v2/register', methods=['POST'])
 def register():
     rules = {
         'email': {
@@ -20,48 +20,52 @@ def register():
         },
         'password': {
             'type': 'string',
-            'minlength': 10,
+            'minlength': 6,
             'maxlength': 20
         }
     }
     error_msg = {
-        'name': {
-            'type': u'姓名必须是字符串',
-            'minlength': u'姓名必须大于10',
-            'maxlength': u'姓名必须小于20'
+        'email': {
+            'type': u'邮箱必须是字符串',
+            'minlength': u'邮箱必须大于10',
+            'maxlength': u'邮箱必须小于20'
         },
         'password': {
             'type': u'密码必须是字符串',
-            'minlength': u'密码必须小于20',
-            'maxlength': u'密码必须大于10'
+            'minlength': u'密码必须大于6',
+            'maxlength': u'密码必须小于20'
         }
     }
     error = BaseController().validateInput(rules, error_msg)
     if(error is not True):
         return error
-    email = request.form.get('email')
-    password = Users.set_password(request.form.get('password'))
-    user = Users(
-        email=email,
-        password=password,
-        status=1)
-    user.add(user)
-    if user.id:
-        return BaseController().successData('注册成功')
-    return BaseController().error('注册失败')
+    email = request.json.get('email')
+    password = Users.set_password(request.json.get('password'))
+    
+    userData = Users.query.filter_by(email=email).first()
+    if(userData == None):
+        user = Users(
+            email=email,
+            password=password,
+            status=1)
+        user.add(user)
+        if user.id:
+            return BaseController().successData('注册成功')
+        return BaseController().error('注册失败')
+    return BaseController().error('账号已注册')
 
 
 ''' 登录 '''
 
 
-@app.route('/login', methods=['POST'])
+@app.route('/api/v2/login', methods=['POST'])
 def login():
     email = request.json.get('email')
     password = request.json.get('password')
     if (not email or not password):
         return BaseController().successData('用户名和密码不能为空')
     else:
-        result = UsersAuthJWT.authenticate(UsersAuthJWT, email, password)
+        result = UsersAuthJWT.authenticate(email, password)
         return BaseController().successData(result)
 
 
