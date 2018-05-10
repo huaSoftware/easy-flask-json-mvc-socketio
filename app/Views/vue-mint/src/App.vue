@@ -54,7 +54,6 @@ export default {
       MessageBox('你以为还有？', '我帮你写算了...');
     },
     goHome() {
-      alert(1)
       this.$router.push('/home/index')
     },
     goOrder() {

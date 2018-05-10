@@ -30,6 +30,12 @@ const router = new Router({
       name: 'mine',
       component: _import('mine/index'),
       meta: { title: '我的', header: true, back: true, more: true, footer: true }
+    },
+    {
+      path: '/find',
+      name: 'find',
+      component: _import('find/index'),
+      meta: { title: '发现', header: true, back: true, more: true, footer: true }
     }
   ]
 })
