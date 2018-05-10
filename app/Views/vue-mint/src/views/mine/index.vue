@@ -26,7 +26,7 @@
   </div>
 </template>
 <script>
-import {login, register} from '@/api/user'
+import {register} from '@/api/user'
 export default {
   data () {
     return {
@@ -47,9 +47,9 @@ export default {
       })
     },
     handleLogin () {
-      login(this.login_email,this.login_password).then(res => {
-        
-      })
+        this.$store.dispatch('Login', {'login_email':this.login_email,'login_password':this.login_password}).then(() => {
+          this.$router.push({ path: '/' })
+        }) 
     },
     handleRegister () {
       register(this.register_email, this.register_password1 ).then(res => {

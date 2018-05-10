@@ -73,38 +73,26 @@ class BaseController:
         body['debug_id'] = debug_id
         return jsonify(body)
 
+    '''
+    * 返回错误信息
+    * @param  msg string
+    * @return json
+    '''
     def error(self, msg=''):
         return self.json({'error_code': 400, 'error': True, 'msg': msg})
 
-    def successData(self, msg=''):
-        return self.json({'error_code': 200, 'msg': msg})
+    '''
+    * 返回成功信息
+    * @param  msg string
+    * @return json
+    '''
+    def successData(self, data='', msg=''):
+        return self.json({'error_code': 200, 'data': data,'msg': msg})
 
-    def successDataToMsgJson(self, msg={}):
-        msg['error_code'] = 200
-        return self.json(msg)
+    def successDataToMsgJson(self, data={}):
+        data['error_code'] = 200
+        return self.json(data)
 
     def uniqid(self, prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]
 
-
-    ''' 
-    * 用于sql结果列表类型转字典
-    * @param list data
-    * @return dict
-    '''
-    @staticmethod
-    def db_l_to_d(data):
-        data_list = []
-        for val in data:
-            val_dict = val.to_dict()
-            data_list.append(val_dict)
-        data_msg = {}
-        data_msg['msg'] = data_list
-        return data_msg
-
-
-    """ 验证文件类型 """
-    @staticmethod
-    def allowed_file(filename):
-        return '.' in filename and \
-            filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS

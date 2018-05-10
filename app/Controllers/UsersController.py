@@ -1,5 +1,6 @@
 from app import app
 from app.Controllers.BaseController import BaseController
+from app.Vendor.Utils import Utils
 from app.Models.Users import Users
 from app.Models.Suggest import Suggest
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
@@ -54,7 +55,7 @@ def register():
             status=1)
         user.add(user)
         if user.id:
-            return BaseController().successData('注册成功')
+            return BaseController().successData(msg='注册成功')
         return BaseController().error('注册失败')
     return BaseController().error('账号已注册')
 
@@ -67,10 +68,10 @@ def login():
     email = request.json.get('email')
     password = request.json.get('password')
     if (not email or not password):
-        return BaseController().successData('用户名和密码不能为空')
+        return BaseController().error('用户名和密码不能为空')
     else:
         result = UsersAuthJWT.authenticate(email, password)
-        return BaseController().successData(result)
+        return result
 
 
 '''
@@ -82,6 +83,7 @@ def login():
 
 @app.route('/user', methods=['GET'])
 def get():
+    #鉴权
     result = UsersAuthJWT().identify(request)
     if isinstance(result, str):
         return BaseController().error(result)
@@ -114,7 +116,7 @@ def userSuggestJoin():
     data_msg = Suggest.join()
     return BaseController().successDataToMsgJson(data_msg)
 
-# left join
+# ddddleft join
 # 如果想使用right join的话 把类颠倒下即可。
 
 
@@ -127,14 +129,16 @@ def userSuggestLeft():
 """ 上传文件并验证
     https://zhuanlan.zhihu.com/p/23731819?refer=flask
 """
+
+
 @app.route('/document/upload', methods=['POST'])
 def documentUpload():
     files = request.files['document']
     filename = secure_filename(files.filename)
-    if(files and BaseController.allowed_file(filename)):
+    if(files and Utils.allowed_file(filename)):
         path = os.getcwd()+"/uploads/"+filename
         files.save(path)
-        return '你成功走通了'
-    #size = len(files.read())
-    return '文件类型错误'
+        return BaseController().error('你成功走通了')
+    return BaseController().error('文件类型错误')
+
 

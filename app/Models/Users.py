@@ -18,10 +18,10 @@ class Users(db.Model, BaseModel, SerializerMixin):
     # 描述suggest表关系，第一个参数是参照类,要引用的表，
     # 第二个参数是backref为类Suggest申明的新方法，backref为定义反向引用，
     # 第三个参数lazy是决定什么时候sqlalchemy从数据库中加载数据
-    suggest = db.relationship('Suggest', backref='users', lazy='dynamic')
+    #suggest = db.relationship('Suggest', backref='users', lazy='dynamic')
 
-    def __str__(self):
-        return "User(id='%s')" % self.id
+    """  def __str__(self):
+        return "User(id='%s')" % self.id """
 
     #设置密码
     @staticmethod
@@ -48,8 +48,8 @@ class Users(db.Model, BaseModel, SerializerMixin):
         self.query.filter_by(id=id).delete()
         return db.session.commit()
 
-    # 更新密码
+    # 更新更新时间
     @staticmethod
-    def update(email, password):
-        Users.query.filter_by(email=email).update({'password': password})
+    def update(email, updated_at):
+        Users.query.filter_by(email=email).update({'updated_at': updated_at})
         return db.session.commit()

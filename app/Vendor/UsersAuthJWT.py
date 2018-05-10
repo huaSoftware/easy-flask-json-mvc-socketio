@@ -1,3 +1,5 @@
+from app.Controllers.BaseController import BaseController
+from app.Vendor.Utils import Utils
 from app.Models.Users import Users
 from app.env import SECRET_KEY, JWT_LEEWAY
 import datetime
@@ -62,16 +64,17 @@ class UsersAuthJWT():
         """
         userInfo = Users.query.filter_by(email=email).first()
         if(userInfo is None):
-            return '找不到用户'
+            return BaseController().error('找不到用户')
         else:
             if (Users.check_password(userInfo.password, password)):
                 updated_at = int(time.time())
-                userInfo.updated_at = updated_at
-                Users.update(email, password)
+                Users.update(email, updated_at)
                 token = UsersAuthJWT.encode_auth_token(userInfo.id, updated_at)
-                return token.decode()
+                users = userInfo.to_dict(
+                    extend=('-id', '-password'))
+                return BaseController().successData({'token': token.decode(), 'user': users}, '登陆成功')
             else:
-                return '密码不正确'
+                return BaseController().error('密码不正确')
 
     def identify(self, request):
         """

@@ -10,7 +10,7 @@ class BaseModel():
     BAD_REQUEST = 400
     NOT_FOUND = 404
 
-    def formatPaged(page, size, total):
+    def formatPaged(self, page, size, total):
         if int(total) > int(page) * int(size):
             more = 1
         else:
@@ -22,14 +22,14 @@ class BaseModel():
             'more': more
         }
 
-    def formatBody(data={}):
+    def formatBody(self, data={}):
         data['error_code'] = 200
         return data
 
-    def formatError(code, message=''):
-        if code == BAD_REQUEST:
+    def formatError(self, code, message=''):
+        if code == self.BAD_REQUEST:
             message = 'Bad request.'
-        elif code == NOT_FOUND:
+        elif code == self.NOT_FOUND:
             message = 'No result matched.'
         body = {}
         body['error'] = True
@@ -56,36 +56,5 @@ class BaseModel():
         logger.addHandler(fh)
         return logger
 
-    @staticmethod
-    def class_to_dict(obj):
-        '''把对象(支持单个对象、list、set)转换成字典'''
-        is_list = obj.__class__ == [].__class__
-        is_set = obj.__class__ == set().__class__
-        if is_list or is_set:
-            obj_arr = []
-            for o in obj:
-                # 把Object对象转换成Dict对象
-                dict = {}
-                dict.update(o.__dict__)
-                obj_arr.append(dict)
-                return obj_arr
-        else:
-            dict = {}
-            dict.update(obj.__dict__)
-            return dict
 
 
-    ''' 
-    * 用于sql结果列表类型转字典
-    * @param list data
-    * @return dict
-    '''
-    @staticmethod
-    def db_l_to_d(data):
-        data_list = []
-        for val in data:
-            val_dict = val.to_dict()
-            data_list.append(val_dict)
-        data_msg = {}
-        data_msg['msg'] = data_list
-        return data_msg
