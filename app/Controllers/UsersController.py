@@ -116,7 +116,7 @@ def userSuggestJoin():
     data_msg = Suggest.join()
     return BaseController().successDataToMsgJson(data_msg)
 
-# ddddleft join
+# left join
 # 如果想使用right join的话 把类颠倒下即可。
 
 

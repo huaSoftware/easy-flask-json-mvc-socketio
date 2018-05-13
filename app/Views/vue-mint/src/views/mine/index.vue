@@ -1,6 +1,6 @@
 <template>
   <div class="content">
-    <div class="login">
+    <div class="login" >
       <mt-navbar v-model="selected">
         <mt-tab-item id="1">登录</mt-tab-item>
         <mt-tab-item id="2">注册</mt-tab-item>
@@ -23,6 +23,12 @@
         </mt-tab-container-item>
       </mt-tab-container>
     </div>
+    <!-- 路由 -->
+    <router-link   class="compressImg" to='/mine/compressImg'>多图片压缩</router-link>
+    <!-- 记得开启这个，不然组件视图加载不进来哟 -->
+    <keep-alive>
+        <router-view ></router-view>
+    </keep-alive>
   </div>
 </template>
 <script>
@@ -35,7 +41,7 @@ export default {
       login_password: '',
       register_email: '',
       register_password1: '',
-      register_password2: ''
+      register_password2: '',
     }
   },
   props: {},
@@ -48,7 +54,7 @@ export default {
     },
     handleLogin () {
         this.$store.dispatch('Login', {'login_email':this.login_email,'login_password':this.login_password}).then(() => {
-          this.$router.push({ path: '/' })
+          this.$router.push('/find')
         }) 
     },
     handleRegister () {
@@ -65,5 +71,9 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.compressImg{
+  float:right;
+  margin-top:10px;
+  margin-right:10px;
+}
 </style>

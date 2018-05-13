@@ -29,7 +29,14 @@ const router = new Router({
       path: '/mine',
       name: 'mine',
       component: _import('mine/index'),
-      meta: { title: '我的', header: true, back: true, more: true, footer: true }
+      meta: { title: '我的', header: true, back: true, more: true, footer: true },
+      children: [
+        {
+          path: 'compressImg',
+          component: _import('mine/compressImg/index'),
+          meta: { title: '压缩图片', header: true, back: true, more: true, footer: true }
+        }
+      ]
     },
     {
       path: '/find',

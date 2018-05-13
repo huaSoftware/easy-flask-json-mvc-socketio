@@ -1,9 +1,9 @@
 <template>
   <div class="content">
     <div class="json">{{vuex.user}},{{vuex.is_auth}},{{vuex.token}}</div>
-    <div class="explain">js是脚本语言，所以执行完释放变量。vuex，内存数据，读取快，就像redis一样，全局的，页面关闭后释放。</div>
+    <div class="explain">理解：js是脚本语言，所以执行完释放变量。vuex，内存数据，读取快，就像redis一样，全局的，页面关闭后释放。</div>
     <div class="json">{{localToken}}</div>
-    <div class="explain">与vuex相反，localstorage是本地缓存，持久化，I/O是很慢的。</div>
+    <div class="explain">理解：与vuex相反，localstorage是本地缓存，持久化，I/O是很慢的。</div>
   </div>
 </template>
 <script>
@@ -62,8 +62,10 @@ export default {
 <style lang="less" scoped>
 .json{
   margin-top:20px;
+  word-wrap: break-word;
 }
 .explain{
   margin-top:40px;
+  color:red;
 }
 </style>
