@@ -3,7 +3,7 @@
     工具类，封装一些通用方法 
 '''
 from app.env import ALLOWED_EXTENSIONS
-
+import time
 
 class Utils:
     ''' 
@@ -49,3 +49,7 @@ class Utils:
     def allowed_file(filename):
         return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
+
+    """ uuid,唯一id """
+    def uniqid(prefix=''):
+        return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]

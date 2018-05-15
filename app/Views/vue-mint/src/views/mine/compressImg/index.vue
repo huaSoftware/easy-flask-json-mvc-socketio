@@ -4,22 +4,47 @@
     <img class="imgs"  @click="portrait('inputFileTwo')"  :src="headImg" id="userImgTwo">
     <img class="imgs"  @click="portrait('inputFileThree')"  :src="headImg" id="userImgThree">
     <form id="myForm" name="myForm">
-      <input  id="inputFileOne" @change="bind('userImgOne')" type="file" name="documentOne" >
-      <input  id="inputFileTwo" @change="bind('userImgTwo')" type="file" name="documentTwo" >
-      <input  id="inputFileThree" @change="bind('userImgThree')" type="file" name="documentThree" >
+      <input  id="inputFileOne" @change="bind('userImgOne')" type="file" accept="image/*" name="documentOne" >
+      <input  id="inputFileTwo" @change="bind('userImgTwo')" type="file" accept="image/*" name="documentTwo" >
+      <input  id="inputFileThree" @change="bind('userImgThree')" type="file" accept="image/*" name="documentThree" >
     </form>
+    <button @click="handleImg">提交</button>
   </div>
 </template>
 <script>
 import storage from '@/utils/localstorage'
 import { mapGetters } from 'vuex'
+import { uploadBase64Img } from '@/api/user'
 // vuex状态改变不能同步，所以需要watch和computed一起配合实时更新
 // https://segmentfault.com/q/1010000007918478
 // http://www.jb51.net/article/114472.htm
 export default {
   data () {
     return {
-      imgData: []
+      dict: {
+          userImgOne:
+            {   
+                name:'',
+                size:'',
+                type:'',
+                imgBase64: ''
+            },
+          userImgTwo:
+            {   
+                name:'',
+                size:'',
+                type:'',
+                imgBase64: ''
+            },
+          userImgThree:
+            {   
+                name:'',
+                size:'',
+                type:'',
+                imgBase64: ''
+            }
+      },
+      headImg: ''
     }
   },
   props: {},
@@ -75,11 +100,18 @@ export default {
             let that = this
 			let file = event.target.files[0];
 		    // 选择的文件是图片
+            try{
+                this.dict[id].name = file.name
+                this.dict[id].size = file.size
+                this.dict[id].type = file.type
+            }
+            catch(err){
+				console.log(err);
+			}
 		    var reader = new FileReader();//这是核心,读取操作就是由它完成.
             //reader.readAsText(selectedFile);//读取文件的内容,也可以读取文件的URL
             reader.onload = function (e) {
                 //当读取完成后回调这个函数,然后此时文件的内容存储到了result中,直接操作即可
-                console.log(id)
                 that.uploadHeadImg(e.target.result, id);
             };
             try{
@@ -155,11 +187,10 @@ export default {
 	        var images=new Image();
             images.src=imgPath;
 	        images.onload = function() { 
-              var imgData=that.getBase64Image(images);
-              let dict = {}
-              dict[id] = imgData
-              that.imgData.unshift(dict)
-              console.log(that.imgData)
+              var imgData=that.getBase64Image(images,that.dict[id].size,that.dict[id].type);
+              that.dict[id].imgBase64 = imgData
+              console.log(that.dict)
+              //that.imgData.unshift(that.dict)
 		      /*ajax*/
             /*  var url    = '/api/v2/member.user.img';
             var data   = {'imgDatas':imgData,'url':GLOBAL_CONFIG['API_HOST']};
@@ -174,35 +205,42 @@ export default {
                 }; 
             Request(url,data,success,type,header).ajax(); */
 			}
-	    },
-	    // 压缩图片转成base64
-	    getBase64Image:function (img){
-            var canvas=document.createElement("canvas");
-            var width = 300;
-	        var height = 400;
-	       /*  var width=img.width;
-            var height=img.height;
-	        if(width>height){
-	            if(width>100){
-	                height=Math.round(height*=100/width);
-	                width=100;
-	            }
-	        }else{
-	            if(height>100){
-	                width=Math.round(width*=100/height);
-	            }
-	            height=100;
-	        } */
-	        canvas.width=width;
-	        canvas.height=height;
-	        var ctx=canvas.getContext('2d');
-	        ctx.drawImage(img,0,0,width,height);
-			
-	        var dataUrl=canvas.toDataURL('image/png',1);
-	        //console.log(dataUrl);
-	        return dataUrl.replace('data:image/png:base64,','');
-	    }   
-
+	  },
+    // 压缩图片转成base64
+    getBase64Image:function (img, size ,type){
+          console.log(img.width)
+          if(size >307200){ //大于300KB就减少10倍长宽
+              if(img.height >2000){
+                  var width=img.width / 10;
+                  var height=img.height / 10;
+              }
+              else if(img.height >1000) {
+                  var width=img.width / 5;
+                  var height=img.height / 5;
+              }
+              else if(img.height >500) {
+                  var width=img.width / 2.5;
+                  var height=img.height / 2.5;
+              }
+          }else{
+              var width=img.width;
+              var height=img.height;
+          }
+          var canvas=document.createElement("canvas");
+        canvas.width=width;
+        canvas.height=height;
+        var ctx=canvas.getContext('2d');
+        ctx.drawImage(img,0,0,width,height);
+    
+        var dataUrl=canvas.toDataURL(type,1);
+        //console.log(dataUrl);
+        return dataUrl.replace('data:'+type+':base64,','');
+    },
+    handleImg(){
+      uploadBase64Img(this.dict).then(res =>{
+          
+      })
+    }
   },
   filters: {},
   computed: {

@@ -5,6 +5,7 @@
 '''
 from app.env import DEBUG_LOG, MAX_CONTENT_LENGTH, ALLOWED_EXTENSIONS
 from app.Vendor.CustomErrorHandler import CustomErrorHandlers
+from app.Vendor.ObjectValidator import ObjectValidator
 from flask import request, jsonify
 import cerberus
 import logging
@@ -24,9 +25,10 @@ class BaseController:
     def validateInput(self, rules, error_msg=None):
         v = cerberus.Validator(
             rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
-        """ 这边修改成json格式接收参数 """
+        #v = ObjectValidator(rules)
+        #这边修改成json格式接收参数
         requests = request.get_json()
-        if (v.validate(requests)):
+        if (v.validate(requests)):  # validate
             return True
         error = {}
         error['msg'] = v.errors

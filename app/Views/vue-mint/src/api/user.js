@@ -31,3 +31,11 @@ export function logout (token) {
     }
   })
 }
+
+export function uploadBase64Img (data) {
+  return request({
+    url: '/api/v2//document/upload/base64',
+    method: 'post',
+    data
+  })
+}

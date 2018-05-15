@@ -7,6 +7,7 @@ from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from flask import request
 from werkzeug.utils import secure_filename
 import os
+import base64
 
 ''' 注册 '''
 
@@ -142,3 +143,75 @@ def documentUpload():
     return BaseController().error('文件类型错误')
 
 
+"""上传base64形式文件并杨峥
+    需要前端传入文件类型
+"""
+
+
+@app.route('/api/v2//document/upload/base64', methods=['post'])
+def documentUploadBase64():
+    #二维数组验证
+    rules = {
+        'userImgOne': { 
+            'type': 'dict',
+            'allow_unknown': True,
+            'schema': {
+                'imgBase64':{
+                   
+                    'type': 'string'
+                }
+            }
+         },
+        'userImgTwo': {
+            'type': 'dict',
+            'allow_unknown': True,
+            'schema': {
+                'imgBase64': {
+                   
+                    'type': 'string'
+                }
+            }
+        },
+        'userImgThree': {
+            'type': 'dict',
+            'allow_unknown': True,
+            'schema': {
+                'imgBase64': {
+                    
+                    'type': 'string'
+                }   
+            }   
+        }
+    }
+    error_msg = {
+        'userImgOne': {
+            'type': 'dict',
+            'imgBase64':{
+               'required': u'图一是必须的',
+               'type': u'图一必须是字符串'
+            }
+        },
+        'userImgTwo': {
+            'type': 'dict',
+            'imgBase64': {
+                'required': u'图二是必须的',
+                'type': u'图二必须是字符串'
+            }
+        },
+        'userImgThree': {
+            'type': 'dict',
+            'imgBase64':{
+               'required': u'图三是必须的',
+               'type': u'图三必须是字符串'
+            }
+        }
+    }
+    error = BaseController().validateInput(rules, error_msg)
+    if(error is not True):
+        return error
+    userImgOne = request.json.get('userImgOne')['imgBase64'].split(',')[1]
+    imgdata = base64.b64decode(userImgOne)
+    path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
+    file = open(path, 'wb')
+    file.write(imgdata)
+    file.close()
