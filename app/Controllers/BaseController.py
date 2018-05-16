@@ -5,7 +5,6 @@
 '''
 from app.env import DEBUG_LOG, MAX_CONTENT_LENGTH, ALLOWED_EXTENSIONS
 from app.Vendor.CustomErrorHandler import CustomErrorHandlers
-from app.Vendor.ObjectValidator import ObjectValidator
 from flask import request, jsonify
 import cerberus
 import logging

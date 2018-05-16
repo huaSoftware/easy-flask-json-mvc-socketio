@@ -154,55 +154,154 @@ def documentUploadBase64():
     rules = {
         'userImgOne': { 
             'type': 'dict',
-            'allow_unknown': True,
             'schema': {
                 'imgBase64':{
-                   
-                    'type': 'string'
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'name': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'size': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'type': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
                 }
             }
          },
         'userImgTwo': {
             'type': 'dict',
-            'allow_unknown': True,
             'schema': {
                 'imgBase64': {
-                   
-                    'type': 'string'
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'name': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'size': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'type': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
                 }
             }
         },
         'userImgThree': {
             'type': 'dict',
-            'allow_unknown': True,
             'schema': {
                 'imgBase64': {
-                    
-                    'type': 'string'
-                }   
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'name': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'size': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                },
+                'type': {
+                    'required': True,
+                    'type': 'string',
+                    'minlength': 2
+                }
             }   
         }
     }
     error_msg = {
         'userImgOne': {
             'type': 'dict',
-            'imgBase64':{
-               'required': u'图一是必须的',
-               'type': u'图一必须是字符串'
+            'schema': {
+                'imgBase64':{
+                'required': u'图一是必须的',
+                'type': u'图一必须是字符串',
+                'minlength': u'图一字符最小是2'
+                },
+                'name': {
+                    'required': u'图一是必须的',
+                    'type':  u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'size': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'type': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                }
             }
         },
         'userImgTwo': {
             'type': 'dict',
-            'imgBase64': {
-                'required': u'图二是必须的',
-                'type': u'图二必须是字符串'
+            'schema': {
+                'imgBase64': {
+                    'required': u'图二是必须的',
+                    'type': u'图二必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'name': {
+                    'required': u'图一是必须的',
+                    'type':  u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'size': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'type': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                }
             }
         },
         'userImgThree': {
             'type': 'dict',
-            'imgBase64':{
-               'required': u'图三是必须的',
-               'type': u'图三必须是字符串'
+            'schema': {
+                'imgBase64':{
+                    'required': u'图三是必须的',
+                    'type': u'图三必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'name': {
+                    'required': u'图一是必须的',
+                    'type':  u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'size': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                },
+                'type': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
+                }
             }
         }
     }
