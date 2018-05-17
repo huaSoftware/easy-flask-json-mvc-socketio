@@ -2,7 +2,7 @@
 import { login } from '@/api/user'
 import { getToken, setToken } from '@/utils/auth'
 import storage from '@/utils/localstorage'
-
+import { Toast } from 'mint-ui'
 const user = {
   state: {
     token: getToken('token', process.env.EXPIRATION_TIME),
@@ -18,6 +18,7 @@ const user = {
           console.log(response)
           const data = response.data
           console.log(data.token)
+          Toast(response.data)
           // 存取token到localstorage
           setToken('token', data.token)
           // 存取user对象到localstorage

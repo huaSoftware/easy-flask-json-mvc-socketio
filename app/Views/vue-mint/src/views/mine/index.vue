@@ -24,7 +24,7 @@
       </mt-tab-container>
     </div>
     <!-- 路由 -->
-    <router-link   class="compressImg" to='/mine/compressImg'>多图片压缩</router-link>
+    <router-link   class="compressImg" to='/mine/compressImg'>多图片压缩,子路由实现</router-link>
     <!-- 记得开启这个，不然组件视图加载不进来哟 -->
     <keep-alive>
         <router-view ></router-view>
@@ -73,7 +73,9 @@ export default {
 <style lang="less" scoped>
 .compressImg{
   float:right;
-  margin-top:10px;
+  position: relative;
   margin-right:10px;
+  margin-top:10px;
+
 }
 </style>

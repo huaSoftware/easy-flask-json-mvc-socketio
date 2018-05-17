@@ -61,6 +61,7 @@ export default {
 .shilaimu{
   position: relative;
   top:60px;
+  text-align: center;
 }
 .hint{
   position: fixed;

@@ -43,6 +43,12 @@ const router = new Router({
       name: 'find',
       component: _import('find/index'),
       meta: { title: '发现', header: true, back: true, more: true, footer: true }
+    },
+    {
+      path: '/order',
+      name: 'order',
+      component: _import('order/index'),
+      meta: { title: '订单', header: true, back: true, more: true, footer: true }
     }
   ]
 })

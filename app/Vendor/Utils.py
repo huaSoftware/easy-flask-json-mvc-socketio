@@ -7,7 +7,7 @@ import time
 
 class Utils:
     ''' 
-    * 用于sql结果列表类型转字典
+    * 用于sql结果列表对象类型转字典
     * @param list data
     * @return dict
     '''
@@ -18,7 +18,7 @@ class Utils:
             val_dict = val.to_dict()
             data_list.append(val_dict)
         data = {}
-        data['data'] = data_list
+        data = data_list
         return data
 
     ''' 

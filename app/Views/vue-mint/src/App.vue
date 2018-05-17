@@ -20,7 +20,7 @@
       </mt-tab-item>
       <mt-tab-item id="发现">
         <span slot="icon" class="icon-search2 iconfont" @click="goFind"></span>
-        发现
+        vuex
       </mt-tab-item>
       <mt-tab-item id="我的">
         <span slot="icon" class="icon-w iconfont"  @click="goMine"></span>
@@ -78,7 +78,7 @@ export default {
   font-family: 'Avenir', Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  text-align: center;
+  //text-align: center;
   color: #2c3e50;
   width: 100%;
   height: 100%;

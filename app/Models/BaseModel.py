@@ -10,7 +10,8 @@ class BaseModel():
     BAD_REQUEST = 400
     NOT_FOUND = 404
 
-    def formatPaged(self, page, size, total):
+    @staticmethod
+    def formatPaged(page, size, total):
         if int(total) > int(page) * int(size):
             more = 1
         else:
@@ -22,9 +23,12 @@ class BaseModel():
             'more': more
         }
 
-    def formatBody(self, data={}):
-        data['error_code'] = 200
-        return data
+    @staticmethod
+    def formatBody(data={}):
+        dataformat = {}
+        dataformat['error_code'] = 200
+        dataformat['data'] = data
+        return dataformat
 
     def formatError(self, code, message=''):
         if code == self.BAD_REQUEST:

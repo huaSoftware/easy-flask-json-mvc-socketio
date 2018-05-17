@@ -3,6 +3,7 @@ from app.Controllers.BaseController import BaseController
 from app.Vendor.Utils import Utils
 from app.Models.Users import Users
 from app.Models.Suggest import Suggest
+from app.Models.Comments import Comments
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from flask import request
 from werkzeug.utils import secure_filename
@@ -167,7 +168,7 @@ def documentUploadBase64():
                 },
                 'size': {
                     'required': True,
-                    'type': 'string',
+                    'type': 'integer',
                     'minlength': 2
                 },
                 'type': {
@@ -192,7 +193,7 @@ def documentUploadBase64():
                 },
                 'size': {
                     'required': True,
-                    'type': 'string',
+                    'type': 'integer',
                     'minlength': 2
                 },
                 'type': {
@@ -217,7 +218,7 @@ def documentUploadBase64():
                 },
                 'size': {
                     'required': True,
-                    'type': 'string',
+                    'type': 'integer',
                     'minlength': 2
                 },
                 'type': {
@@ -260,22 +261,22 @@ def documentUploadBase64():
                 'imgBase64': {
                     'required': u'图二是必须的',
                     'type': u'图二必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'minlength': u'图二字符最小是2'
                 },
                 'name': {
-                    'required': u'图一是必须的',
-                    'type':  u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图二是必须的',
+                    'type':  u'图二必须是字符串',
+                    'minlength': u'图二字符最小是2'
                 },
                 'size': {
-                    'required': u'图一是必须的',
-                    'type': u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图二是必须的',
+                    'type': u'图二必须是整数',
+                    'minlength': u'图二字符最小是2'
                 },
                 'type': {
-                    'required': u'图一是必须的',
-                    'type': u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图二是必须的',
+                    'type': u'图二必须是字符串',
+                    'minlength': u'图二字符最小是2'
                 }
             }
         },
@@ -285,22 +286,22 @@ def documentUploadBase64():
                 'imgBase64':{
                     'required': u'图三是必须的',
                     'type': u'图三必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'minlength': u'图三字符最小是2'
                 },
                 'name': {
-                    'required': u'图一是必须的',
-                    'type':  u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图三是必须的',
+                    'type':  u'图三必须是字符串',
+                    'minlength': u'图三字符最小是2'
                 },
                 'size': {
-                    'required': u'图一是必须的',
-                    'type': u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图三是必须的',
+                    'type': u'图三必须是整数',
+                    'minlength': u'图三字符最小是2'
                 },
                 'type': {
-                    'required': u'图一是必须的',
-                    'type': u'图一必须是字符串',
-                    'minlength': u'图一字符最小是2'
+                    'required': u'图三是必须的',
+                    'type': u'图三必须是字符串',
+                    'minlength': u'图三字符最小是2'
                 }
             }
         }
@@ -308,9 +309,47 @@ def documentUploadBase64():
     error = BaseController().validateInput(rules, error_msg)
     if(error is not True):
         return error
-    userImgOne = request.json.get('userImgOne')['imgBase64'].split(',')[1]
-    imgdata = base64.b64decode(userImgOne)
-    path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
-    file = open(path, 'wb')
-    file.write(imgdata)
-    file.close()
+    #这边图片类型，大小判断请根据需求自己判断，暂不展开
+    for(k,v) in request.json.items():
+       userImg = v['imgBase64'].split(',')[1]
+       imgdata = base64.b64decode(userImg)
+       path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
+       file = open(path, 'wb')
+       file.write(imgdata)
+       file.close()
+    """userImgOne = request.json.get('userImgOne')['imgBase64'].split(',')[1]
+    userImgTwo = request.json.get('userImgTwo')['imgBase64'].split(',')[1]
+    userImgThree = request.json.get('userImgThree')['imgBase64'].split(',')[1]
+    imgdata = base64.b64decode(userImgOne) """
+    return BaseController().successData(msg='图片提交成功')
+
+
+@app.route('/api/v2/comments/get', methods=['post'])
+def commentsGet():
+    rules = {
+        'pageNo': {
+            'required': True,
+            'type': 'integer'
+        },
+        'pageSize': {
+            'required': True,
+            'type': 'integer'
+        }
+    }
+    error_msg = {
+        'pageNo': {
+            'required': u'当前页是必须的',
+            'type': u'当前页必须是整数'
+        },
+        'pageSize': {
+            'required': u'当前页是必须的',
+            'type': u'当前页必须是整数'
+        }
+    }
+    error = BaseController().validateInput(rules, error_msg)
+    if(error is not True):
+        return error
+    pageNo = request.json.get('pageNo')
+    pageSize = request.json.get('pageSize')
+    data =Comments.getCommentsList(pageNo, pageSize)
+    return BaseController().json(data)

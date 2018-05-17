@@ -39,3 +39,11 @@ export function uploadBase64Img (data) {
     data
   })
 }
+
+export function getCommentList (data) {
+  return request({
+    url: '/api/v2/comments/get',
+    method: 'post',
+    data
+  })
+}

@@ -1,14 +1,20 @@
 <template>
-  <div>
-    <img class="imgs"  @click="portrait('inputFileOne')"  :src="headImg" id="userImgOne">
-    <img class="imgs"  @click="portrait('inputFileTwo')"  :src="headImg" id="userImgTwo">
-    <img class="imgs"  @click="portrait('inputFileThree')"  :src="headImg" id="userImgThree">
+  <div class="img-content">
+    <div class="imgs-div">
+        <img class="imgs"  @click="portrait('inputFileOne')"  :src="headImg" id="userImgOne">
+    </div>
+    <div class="imgs-div">
+        <img class="imgs"  @click="portrait('inputFileTwo')"  :src="headImg" id="userImgTwo">
+    </div>
+    <div class="imgs-div">
+        <img class="imgs"  @click="portrait('inputFileThree')"  :src="headImg" id="userImgThree">
+    </div>
     <form id="myForm" name="myForm">
       <input  id="inputFileOne" @change="bind('userImgOne')" type="file" accept="image/*" name="documentOne" >
       <input  id="inputFileTwo" @change="bind('userImgTwo')" type="file" accept="image/*" name="documentTwo" >
       <input  id="inputFileThree" @change="bind('userImgThree')" type="file" accept="image/*" name="documentThree" >
     </form>
-    <button @click="handleImg">提交</button>
+    <button @click="handleImg" class="mint-button mint-button--primary" style="float:right;margin-right:10px">上传图片</button>
   </div>
 </template>
 <script>
@@ -44,7 +50,7 @@ export default {
                 imgBase64: ''
             }
       },
-      headImg: ''
+      headImg: 'static/img/jia.jpg'
     }
   },
   props: {},
@@ -253,11 +259,24 @@ export default {
 }
 </script>
 <style lang="less" scoped>
+.img-content{
+    width:100%;
+    clear: both;
+}
 #myForm{
     display:none;
 }
+.imgs-div{
+    width: 32.5%;
+    padding-bottom:32.5%;
+    height:0px;
+    position: relative;
+    display: inline-block;
+}
 .imgs{
-    width:100px;
-    height:100px;
+    width: 100%;
+    height: 100%;
+    position:absolute;
+    text-align:!important;
 }
 </style>

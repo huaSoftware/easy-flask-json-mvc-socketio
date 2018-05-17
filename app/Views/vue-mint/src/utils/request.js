@@ -1,6 +1,5 @@
 import axios from 'axios'
 import store from '../store'
-import router from '../router'
 import { Toast } from 'mint-ui'
 
 // 创建axios实例
@@ -40,7 +39,6 @@ service.interceptors.response.use(
     // store.dispatch('updateIsAuth', true)
     // console.log(store.getters.is_auth)
     if (res.error_code === 200 || res.error === false) {
-      Toast(res.msg)
       return res
     }
     if (res.error_code === 400 || res.error === false) {
