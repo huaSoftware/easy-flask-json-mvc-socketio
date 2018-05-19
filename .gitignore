@@ -4,3 +4,4 @@
 /app/Vendor/__pycache__
 /app/Middleware/__pycache__
 /.vscode
+/spam.log
