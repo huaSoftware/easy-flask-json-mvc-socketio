@@ -52,7 +52,7 @@
 
 		资源层:src/assets/*
 
-		仓储层(vuex): src/store/*
+		仓储层(vuex):src/store/*
 
 		工具层:src/utils/*
 
