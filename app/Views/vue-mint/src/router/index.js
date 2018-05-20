@@ -29,14 +29,7 @@ const router = new Router({
       path: '/mine',
       name: 'mine',
       component: _import('mine/index'),
-      meta: { title: '我的', header: true, back: true, more: true, footer: true },
-      children: [
-        {
-          path: 'compressImg',
-          component: _import('mine/compressImg/index'),
-          meta: { title: '压缩图片', header: true, back: true, more: true, footer: true }
-        }
-      ]
+      meta: { title: '我的', header: true, back: true, more: true, footer: true }
     },
     {
       path: '/find',
@@ -45,17 +38,34 @@ const router = new Router({
       meta: { title: '发现', header: true, back: true, more: true, footer: true }
     },
     {
-      path: '/order',
-      name: 'order',
-      component: _import('order/index'),
-      meta: { title: '订单', header: true, back: true, more: true, footer: true }
-    },
-    {
-      path: '/order/infinite-scroll',
-      name: 'infinite-scroll',
-      component: _import('order/infinite-scroll/index'),
-
-      meta: {title: '无限滚动', header: true, back: true, more: true, footer: true}
+      path: '/function',
+      name: 'function',
+      component: _import('function/index'),
+      meta: { title: 'mint功能', header: true, back: true, more: true, footer: true },
+      children: [
+        {
+          path: 'compressImg',
+          component: _import('function/compressImg/index'),
+          meta: { title: '压缩图片', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'loadMore',
+          component: _import('function/load-more/index'),
+          meta: { title: '上下拉加载', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'infinite-scroll',
+          name: 'infinite-scroll',
+          component: _import('function/infinite-scroll/index'),
+          meta: { title: '无限滚动', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'spinner',
+          name: 'spinner',
+          component: _import('function/spinner/index'),
+          meta: { title: '加载效果', header: true, back: true, more: true, footer: true }
+        }
+      ]
     }
   ]
 })

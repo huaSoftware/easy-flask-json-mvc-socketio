@@ -1,5 +1,5 @@
 <template>
-  <div class="img-content">
+  <div class="img-content clean">
     <div class="imgs-div">
         <img class="imgs"  @click="portrait('inputFileOne')"  :src="headImg" id="userImgOne">
     </div>

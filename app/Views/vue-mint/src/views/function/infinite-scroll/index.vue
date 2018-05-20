@@ -1,6 +1,6 @@
 <template>
   <!--ul里面几个scoller就是无限滚动的几个api,不推荐-->
-  <ul class="mui-table-view" 
+  <ul class="mui-table-view clean" 
       v-infinite-scroll="loadBottom" 
       infinite-scroll-disabled="false" 
       infinite-scroll-distance="0" 

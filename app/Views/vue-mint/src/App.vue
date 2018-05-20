@@ -14,9 +14,9 @@
         <span slot="icon" class="icon-zhu iconfont" @click="goHome"></span>
         首页
       </mt-tab-item>
-      <mt-tab-item id="订单">
+      <mt-tab-item id="mint功能">
         <span slot="icon" class="icon-ding2 iconfont" @click="goOrder"></span>
-        订单
+        mint功能
       </mt-tab-item>
       <mt-tab-item id="发现">
         <span slot="icon" class="icon-search2 iconfont" @click="goFind"></span>
@@ -57,7 +57,7 @@ export default {
       this.$router.push('/home/index')
     },
     goOrder() {
-      this.$router.push('/order')
+      this.$router.push('/function')
     },
     goFind() {
       this.$router.push('/find')

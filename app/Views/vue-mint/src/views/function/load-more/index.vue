@@ -1,5 +1,4 @@
 <template>
-  <div class="content">
     <v-loadmore :top-method="loadTop" 
       :bottom-method="loadBottom" 
       :bottom-all-loaded="allLoaded" 
@@ -15,7 +14,6 @@
         </li>  
       </ul>  
   </v-loadmore>
-  </div>
 </template>
 <script>
 //http://mint-ui.github.io/#!/zh-cn,loadmore示例，警告千万不要打开:auto-fill="true",CPU差点烧掉！！！
@@ -85,10 +83,6 @@ export default {
 </script>
 
 <style lang="less" scoped>
-.content{
-  height:100vh;
-  overflow: scroll;
-}
 .mint-loadmore{
  padding-bottom:55px;
 }
