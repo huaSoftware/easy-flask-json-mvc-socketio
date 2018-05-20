@@ -49,6 +49,13 @@ const router = new Router({
       name: 'order',
       component: _import('order/index'),
       meta: { title: '订单', header: true, back: true, more: true, footer: true }
+    },
+    {
+      path: '/order/infinite-scroll',
+      name: 'infinite-scroll',
+      component: _import('order/infinite-scroll/index'),
+
+      meta: {title: '无限滚动', header: true, back: true, more: true, footer: true}
     }
   ]
 })
