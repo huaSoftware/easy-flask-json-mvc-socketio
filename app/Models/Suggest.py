@@ -12,7 +12,7 @@ class Suggest(BaseModel, db.Model, SerializerMixin):
     #外键申明
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #user表虚拟对象，关联的内容会在user对象中
-    User = db.relationship('Users')
+    Users = db.relationship('Users')
     message = db.Column(db.String(255))
     
     # 一对多普通方式

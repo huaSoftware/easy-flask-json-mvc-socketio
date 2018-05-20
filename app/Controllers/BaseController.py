@@ -90,10 +90,6 @@ class BaseController:
     def successData(self, data='', msg=''):
         return self.json({'error_code': 200, 'data': data,'msg': msg})
 
-    def successDataToMsgJson(self, data={}):
-        data['error_code'] = 200
-        return self.json(data)
-
     def uniqid(self, prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]
 

@@ -83,7 +83,7 @@ def login():
 '''
 
 
-@app.route('/user', methods=['GET'])
+@app.route('/api/v2/user', methods=['GET'])
 def get():
     #鉴权
     result = UsersAuthJWT().identify(request)
@@ -97,35 +97,35 @@ def get():
             'email': user.email,
             'login_time': user.updated_at
         }
-    return BaseController().successDataToMsgJson(returnUser)
+    return BaseController().successData(returnUser)
 
 
 ''' 查询用户留言记录，一对多
 '''
 
 
-@app.route('/user/suggest', methods=['GET'])
+@app.route('/api/v2/user/suggest', methods=['GET'])
 def userSuggest():
     data_msg = Suggest.on_to_many()
-    return BaseController().successDataToMsgJson(data_msg)
+    return BaseController().successData(data_msg)
 
 
 # join
 
 
-@app.route('/user/suggest/join', methods=['GET'])
+@app.route('/api/v2/user/suggest/join', methods=['GET'])
 def userSuggestJoin():
     data_msg = Suggest.join()
-    return BaseController().successDataToMsgJson(data_msg)
+    return BaseController().successData(data_msg)
 
 # left join
 # 如果想使用right join的话 把类颠倒下即可。
 
 
-@app.route('/user/suggest/left', methods=['GET'])
+@app.route('/api/v2/user/suggest/left', methods=['GET'])
 def userSuggestLeft():
     data_msg = Suggest.leftJoin()
-    return BaseController().successDataToMsgJson(data_msg)
+    return BaseController().successData(data_msg)
 
     
 """ 上传文件并验证
@@ -133,7 +133,7 @@ def userSuggestLeft():
 """
 
 
-@app.route('/document/upload', methods=['POST'])
+@app.route('/api/v2/document/upload', methods=['POST'])
 def documentUpload():
     files = request.files['document']
     filename = secure_filename(files.filename)

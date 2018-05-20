@@ -6,6 +6,7 @@ from sqlalchemy_serializer import SerializerMixin
 
 class Users(db.Model, BaseModel, SerializerMixin):
     __tablename__ = 'users'
+    __schema_extend__ = ('-password',)
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(255), nullable=True)
     email = db.Column(db.String(255))
@@ -18,6 +19,7 @@ class Users(db.Model, BaseModel, SerializerMixin):
     # 描述suggest表关系，第一个参数是参照类,要引用的表，
     # 第二个参数是backref为类Suggest申明的新方法，backref为定义反向引用，
     # 第三个参数lazy是决定什么时候sqlalchemy从数据库中加载数据
+    #这里缺少外键，暂不展开
     #suggest = db.relationship('Suggest', backref='users', lazy='dynamic')
 
     """  def __str__(self):
