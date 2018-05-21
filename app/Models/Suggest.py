@@ -12,7 +12,10 @@ class Suggest(BaseModel, db.Model, SerializerMixin):
     #外键申明
     users_id = db.Column(db.Integer, db.ForeignKey('users.id'))
     #user表虚拟对象，关联的内容会在user对象中
-    Users = db.relationship('Users')
+    # 第二个参数是backref会添加一个对象给user模型，
+    # 第三个参数lazy是决定什么时候sqlalchemy从数据库中加载数据
+    #uselist=False一对一关系，true是一对多
+    users = db.relationship('suggest', backref='users')  # , backref = 'users'
     message = db.Column(db.String(255))
     
     # 一对多普通方式

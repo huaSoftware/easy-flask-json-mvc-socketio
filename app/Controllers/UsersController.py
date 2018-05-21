@@ -100,6 +100,17 @@ def get():
     return BaseController().successData(returnUser)
 
 
+""" 不通过鉴权获取用户信息 """
+
+
+@app.route('/api/v2/userInfo', methods=['POST'])
+def getInfo():
+    id = request.json.get('id')
+    data = Users.query.filter_by(id=id).all()
+    datas = Utils.db_l_to_d(data)
+    return BaseController().successData(datas)
+
+
 ''' 查询用户留言记录，一对多
 '''
 
