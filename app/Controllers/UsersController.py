@@ -127,6 +127,7 @@ def userSuggest():
 @app.route('/api/v2/user/suggest/join', methods=['GET'])
 def userSuggestJoin():
     data_msg = Suggest.join()
+    print(data_msg)
     return BaseController().successData(data_msg)
 
 # left join

@@ -20,7 +20,7 @@ class Users(db.Model, BaseModel, SerializerMixin):
     # 第二个参数是backref为类Suggest申明的新方法，backref为定义反向引用，
     # 第三个参数lazy是决定什么时候sqlalchemy从数据库中加载数据
     #这里缺少外键，暂不展开
-    #suggest = db.relationship('Suggest', backref='users', lazy='dynamic')
+    #suggest = db.relationship('Suggest')
 
     """  def __str__(self):
         return "User(id='%s')" % self.id """
