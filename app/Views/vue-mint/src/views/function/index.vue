@@ -5,6 +5,12 @@
     <router-link class="top" to="/function/loadMore">上下拉加载</router-link>
     <router-link class="top" to="/function/infinite-scroll">无限加载</router-link>
     <router-link class="top" to="/function/spinner">加载效果</router-link>
+    <router-link class="top" to="/function/toast">弹窗</router-link>
+    <router-link class="top" to="/function/process">进度条</router-link>
+    <router-link class="top" to="/function/picker">选择器</router-link>
+    <router-link class="top" to="/function/checklist">复选框</router-link>
+    <router-link class="top" to="/function/radio">单选框</router-link>
+    <router-link class="top" to="/function/actionSheet">操作表</router-link>
      <keep-alive>
         <router-view ></router-view>
     </keep-alive>
@@ -12,9 +18,7 @@
 </template>
 <script>
 //http://mint-ui.github.io/#!/zh-cn,loadmore示例，警告千万不要打开:auto-fill="true",CPU差点烧掉！！！
-import { Loadmore } from 'mint-ui';
 import { Cell } from 'mint-ui';
-import { getCommentList } from '@/api/user'
 export default {
   data () {
     return {

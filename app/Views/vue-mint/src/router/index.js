@@ -64,6 +64,42 @@ const router = new Router({
           name: 'spinner',
           component: _import('function/spinner/index'),
           meta: { title: '加载效果', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'toast',
+          name: 'toast',
+          component: _import('function/toast/index'),
+          meta: { title: '吐司', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'process',
+          name: 'process',
+          component: _import('function/process/index'),
+          meta: { title: '进度条', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'picker',
+          name: 'picker',
+          component: _import('function/picker/index'),
+          meta: { title: '选择器', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'checklist',
+          name: 'checklist',
+          component: _import('function/checklist/index'),
+          meta: { title: '复选框', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'radio',
+          name: 'radio',
+          component: _import('function/radio/index'),
+          meta: { title: '单选框', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'actionSheet',
+          name: 'actionSheet',
+          component: _import('function/actionSheet/index'),
+          meta: { title: '操作表', header: true, back: true, more: true, footer: true }
         }
       ]
     }
