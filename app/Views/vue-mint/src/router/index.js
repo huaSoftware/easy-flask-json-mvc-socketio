@@ -100,6 +100,12 @@ const router = new Router({
           name: 'actionSheet',
           component: _import('function/actionSheet/index'),
           meta: { title: '操作表', header: true, back: true, more: true, footer: true }
+        },
+        {
+          path: 'field',
+          name: 'field',
+          component: _import('function/field/index'),
+          meta: { title: '表单编辑器', header: true, back: true, more: true, footer: true }
         }
       ]
     }

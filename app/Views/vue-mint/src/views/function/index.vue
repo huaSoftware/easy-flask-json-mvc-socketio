@@ -11,6 +11,7 @@
     <router-link class="top" to="/function/checklist">复选框</router-link>
     <router-link class="top" to="/function/radio">单选框</router-link>
     <router-link class="top" to="/function/actionSheet">操作表</router-link>
+    <router-link class="top" to="/function/field">表单编辑器</router-link>
      <keep-alive>
         <router-view ></router-view>
     </keep-alive>
