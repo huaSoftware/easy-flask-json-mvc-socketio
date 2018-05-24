@@ -44,7 +44,6 @@ export function validatedError (errors, array) {
 export function validated (formId, option) {
   var va = new validator(formId, option,
     function (obj, evt) {
-
       if (obj.errors.length !== 0) {
         // 判断是否错误
         var error_str = ''

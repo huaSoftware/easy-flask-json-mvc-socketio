@@ -6,14 +6,15 @@
       <mt-field label="密码" placeholder="请输入密码" type="password"  :attr="{name:'password'}" v-model="password" :state="validated_status.password"></mt-field>
       <mt-field label="手机号" placeholder="请输入手机号" type="tel" :attr="{name:'phone'}" v-model="phone" :disableClear="true" :state="validated_status.phone"></mt-field>
       <mt-field label="网站" placeholder="请输入网址" type="url" :attr="{name:'website'}" v-model="website" :disabled="true" :state="validated_status.website"></mt-field>
-      <mt-field label="数字" placeholder="请输入数字" type="number" :attr="{name:'number'}" v-model="number" :state="validated_status.number"></mt-field>
+      <mt-field label="数字" placeholder="请输入数字" type="text" :attr="{name:'number'}" v-model="number" :state="validated_status.number"></mt-field>
       <mt-field label="生日" placeholder="请输入生日" type="date" :attr="{name:'birthday'}" v-model="birthday" :state="validated_status.birthday"></mt-field>
       <mt-field label="自我介绍" placeholder="自我介绍" type="textarea" rows="4" :attr="{name:'introduction'}" v-model="introduction" :state="validated_status.introduction"></mt-field>
-      <mt-button type="primary">提交</mt-button>
+      <mt-button class="btn" type="primary">提交</mt-button>
     </form>
   </div>
 </template>
 <script>
+/* 不要用type="number" validated不识别数字类型 */
 import { Button } from 'mint-ui'
 import { Field } from 'mint-ui'
 import { Toast } from 'mint-ui'
@@ -67,8 +68,9 @@ export default {
         },
         {
           name: 'number',
-          display:"你输入的不是合法网站|网站不能大于12位|网站不能小于6位",
-          rules: 'is_url|max_length(12)|min_length(6)'
+          display:"你输入的不是数字|数字不能大于12位|数字不能小于6位",
+          regexp_num: /^[0-9]+$/,
+          rules: 'regexp_num|max_length(12)|min_length(6)'
         },
         {
           name: 'birthday',
@@ -80,7 +82,7 @@ export default {
           display:"留言不能大于12位|留言不能小于6位",
           rules: 'max_length(12)|min_length(6)'
         }
-      ],
+      ]
     }
   },
   components:{
@@ -115,5 +117,7 @@ export default {
 </script>
 
 <style lang="less" scoped>
-
+.btn{
+  width: 100%;
+}
 </style>
