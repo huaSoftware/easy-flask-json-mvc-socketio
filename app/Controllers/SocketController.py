@@ -22,21 +22,36 @@ def background_thread():
             namespace='/test')
 
 
-''' 后台异步执行推送
+''' 后台异步执行推送开线程法
     对应view层的system_response.html 
 '''
 
 
 @socketio.on('my_request', namespace='/test')
 def test_connect(message):
-    value = message.get('param')
-    print(value)
+    #value = message.get('param')
     global thread
     with thread_lock:
         if thread is None:
             thread = socketio.start_background_task(
                 target=background_thread)
+  
     emit('my_request', {'data': 'Connected', 'count': 0})
+
+
+''' 后台异步执行推送不开线程法
+    对应view层的system_response.html 
+'''
+
+
+@socketio.on('my_request', namespace='/test')
+def test_untheard_connect(message):
+    #value = message.get('param')
+    count = 0
+    while True:
+        socketio.sleep(1)
+        count += 1
+        emit('my_request', {'data': 'Connected', 'untheardCount': count})
 
 
 @socketio.on('request_for_response', namespace='/test')
