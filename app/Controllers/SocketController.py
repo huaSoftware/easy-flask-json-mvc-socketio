@@ -1,4 +1,5 @@
 from flask_socketio import emit, join_room, leave_room
+from app.Models.VirtualCoin import VirtualCoin
 from app import socketio
 from flask import session
 from threading import Lock
@@ -107,4 +108,15 @@ def chat(message):
     name = message['name']
     msg = message['msg']
     emit('chat', {'msg': msg, 'name': name}, room=message['room'])
+
+
+""" 实时推送虚拟货币详情 """
+
+@socketio.on('Virtual', namespace="/VirtualCoin")
+def Virtual(message):
+    while True:
+        socketio.sleep(3)
+        VirtualCoinData = VirtualCoin().getWsContent()
+        emit('Virtual', {'data': VirtualCoinData})
+
 

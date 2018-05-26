@@ -1,0 +1,118 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<script type="text/javascript" src="http://apps.bdimg.com/libs/jquery/2.1.4/jquery.min.js"></script>
+	<!-- 最新版本的 Bootstrap 核心 CSS 文件 -->
+	<link rel="stylesheet" href="https://cdn.bootcss.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u"
+		crossorigin="anonymous">
+	<!-- 最新的 Bootstrap 核心 JavaScript 文件 -->
+	<script src="https://cdn.bootcss.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa"
+    crossorigin="anonymous"></script>
+	<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/2.0.4/socket.io.js"></script>
+	<script src="https://cdn.jsdelivr.net/npm/vue@2.5.16/dist/vue.js"></script>
+	<script src="https://unpkg.com/vuejs-paginate@latest"></script>
+</head>
+<body >	
+	<!-- 内容 -->
+	<div id="content">
+		<!-- 导航栏 -->
+		<nav class="navbar navbar-default" role="navigation">
+			<div class="container-fluid">
+				<div class="navbar-header">
+					<a class="navbar-brand" href="#">socketio</a>
+				</div>
+				<div>
+					<ul class="nav navbar-nav">
+						<li class="active">
+							<a href="#">PC首页</a>
+						</li>
+						<li>
+							<a href="#">PC后台</a>
+						</li>
+						<li class="dropdown">
+							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
+								暂未开放
+								<b class="caret"></b>
+							</a>
+							<ul class="dropdown-menu">
+								<li>
+									<a href="#">暂未开放</a>
+								</li>
+								<li>
+									<a href="#">暂未开放</a>
+								</li>
+								<li>
+									<a href="#">暂未开放</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="#">暂未开放</a>
+								</li>
+								<li class="divider"></li>
+								<li>
+									<a href="#">暂未开放</a>
+								</li>
+							</ul>
+						</li>
+					</ul>
+				</div>
+			</div>
+		</nav>
+		<!-- 订单表格组 -->
+		<div class="page-header">
+			<h3>虚拟币统计
+			</h3>
+		</div>
+		<table class="table table-striped">
+			<thead>
+				<tr>
+					<th>交易所</th>
+					<th>最新价</th>
+					<th>过去24小时内最高价格</th>
+					<th>过去24小时内最低价格</th>
+					<th>过去24小时内成交量</th>
+					<th>最新成交时间</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr v-for=" val in resList">
+					<td>{{val.Name}}</td>
+					<td>{{val.Last}}</td>
+					<td>{{val.High}}</td>
+					<td>{{val.Low}}</td>
+					<td>{{val.Volume}}</td>
+					<td>{{val.UpdateTime}}</td>
+				</tr>
+			</tbody>
+		</table>
+	</div>
+	<script type="text/javascript" charset="utf-8">
+		Vue.component('paginate', VuejsPaginate)
+		vue = new Vue({
+ 			el: '#content',
+			data: {
+				resList:[]
+			},
+			created: function () {
+				
+			},
+			mounted: function () {
+				//连接
+ 				var socket = io.connect('http://127.0.0.1:501/VirtualCoin');
+				socket.emit('Virtual', { 'data': 'test' });
+				//监听回复的消息
+				var that = this;
+ 				socket.on('Virtual', function (data) {
+					that.resList = data.data.Body.Items
+				});
+			},
+			methods: {
+				
+			}
+		});
+	</script>
+	<style>
+	</style>
+</body>
+</html>
