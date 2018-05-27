@@ -20,38 +20,21 @@
 		<nav class="navbar navbar-default" role="navigation">
 			<div class="container-fluid">
 				<div class="navbar-header">
-					<a class="navbar-brand" href="#">socketio</a>
+					<a class="navbar-brand" href="#">虚拟币统计</a>
 				</div>
 				<div>
 					<ul class="nav navbar-nav">
 						<li class="active">
 							<a href="#">PC首页</a>
 						</li>
-						<li>
-							<a href="#">PC后台</a>
-						</li>
 						<li class="dropdown">
 							<a href="#" class="dropdown-toggle" data-toggle="dropdown">
-								暂未开放
+								{{choiceCoin}}
 								<b class="caret"></b>
 							</a>
 							<ul class="dropdown-menu">
-								<li>
-									<a href="#">暂未开放</a>
-								</li>
-								<li>
-									<a href="#">暂未开放</a>
-								</li>
-								<li>
-									<a href="#">暂未开放</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="#">暂未开放</a>
-								</li>
-								<li class="divider"></li>
-								<li>
-									<a href="#">暂未开放</a>
+								<li v-for=" coinType in coinTypeList" @click="choiceType(coinType)">
+									<a href="#">{{coinType}}</a>
 								</li>
 							</ul>
 						</li>
@@ -59,11 +42,7 @@
 				</div>
 			</div>
 		</nav>
-		<!-- 订单表格组 -->
-		<div class="page-header">
-			<h3>虚拟币统计
-			</h3>
-		</div>
+		<!-- 交易所详情 -->
 		<table class="table table-striped">
 			<thead>
 				<tr>
@@ -92,27 +71,51 @@
 		vue = new Vue({
  			el: '#content',
 			data: {
-				resList:[]
+				choiceCoin:'币种选择',
+ 				coinTypeList: ['BTC','LTC','BCC','ZEC','ETH','ETC','EOS','OMG','XRP','IOTA','XMR','NEO','SAN','DASH','GNT','EDO','SNT','QTUM','ZRX','DATA','QASH','ETP','SNG','REP','RCN','FUN','YYW','AID','SPK','RLC','TNB','BAT','MNA','ELF','AVT','TRX','BTG'],
+				resList: []
 			},
 			created: function () {
 				
 			},
 			mounted: function () {
 				//连接
- 				var socket = io.connect('http://127.0.0.1:501/VirtualCoin');
-				socket.emit('Virtual', { 'data': 'test' });
+ 				window.socket = io.connect('http://127.0.0.1:501/VirtualCoin',{"force new connection":true});
+ 				//断开socket.socket.disconnect();
+				window.socket.emit('Virtual', { 'data': 'test' ,'coinName':'BTC'});
 				//监听回复的消息
 				var that = this;
- 				socket.on('Virtual', function (data) {
+ 				window.socket.on('Virtual', function (data) {
+					console.log(data);
 					that.resList = data.data.Body.Items
 				});
 			},
 			methods: {
-				
+				choiceType:function(type){
+					this.choiceCoin = type;
+					window.socket.disconnect();
+					//连接
+					window.socket = io.connect('http://127.0.0.1:501/VirtualCoin');
+					window.socket.emit('Virtual', { 'data': 'test' ,'coinName':type});
+					//监听回复的消息
+					var that = this;
+					window.socket.on('Virtual', function (data) {
+						console.log(1111);
+						console.log(data.data.Body);
+						that.resList = data.data.Body.Items
+					});
+				}
 			}
 		});
 	</script>
 	<style>
+	.coinChoice tbody tr td{
+		cursor:pointer;
+		width:40px;
+		height:20px;
+		line-height:20px;
+		text-align:center;
+	}
 	</style>
 </body>
 </html>

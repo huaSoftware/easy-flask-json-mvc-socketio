@@ -3,9 +3,9 @@ import requests
 import json
 
 class VirtualCoin(BaseModel):
-    def getWsContent(self):
+    def getWsContent(self,CoinName):
       url = 'http://www.daoxiaoyue.com/ws/handle'
-      data = '{"Command":2,"Body":{"Coin":"BTC","Currency":"USD","Base":"CNY"}}'
+      data = '{"Command":2,"Body":{"Coin":"%s","Currency":"USD","Base":"CNY"}}'%(CoinName)
       headers = {
         'Accept': '*/*',
         'Accept-Encoding': 'gzip, deflate',

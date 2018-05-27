@@ -114,9 +114,24 @@ def chat(message):
 
 @socketio.on('Virtual', namespace="/VirtualCoin")
 def Virtual(message):
+    CoinName = message['coinName']
     while True:
         socketio.sleep(3)
-        VirtualCoinData = VirtualCoin().getWsContent()
+        VirtualCoinData = VirtualCoin().getWsContent(CoinName)
         emit('Virtual', {'data': VirtualCoinData})
 
 
+""" 连接事件 """
+
+
+@socketio.on('connect', namespace='/test')
+def connect():
+    emit('my response', {'data': 'Connected'})
+
+
+""" 断开事件 """
+
+
+@socketio.on('disconnect', namespace='/test')
+def disconnect():
+    print('Client disconnected')
