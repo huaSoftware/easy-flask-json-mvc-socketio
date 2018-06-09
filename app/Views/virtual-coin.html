@@ -80,9 +80,9 @@
 			},
 			mounted: function () {
 				//连接
- 				window.socket = io.connect('http://127.0.0.1:501/VirtualCoin',{"force new connection":true});
+ 				window.socket = io.connect('http://127.0.0.1:501/VirtualCoin');
  				//断开socket.socket.disconnect();
-				window.socket.emit('Virtual', { 'data': 'test' ,'coinName':'BTC'});
+				window.socket.emit('Virtual', {'coinName':'BTC'});
 				//监听回复的消息
 				var that = this;
  				window.socket.on('Virtual', function (data) {
@@ -93,17 +93,13 @@
 			methods: {
 				choiceType:function(type){
 					this.choiceCoin = type;
-					window.socket.disconnect();
+					//断开连接，慎用，心跳会停止
+					//window.socket.disconnect();
 					//连接
-					window.socket = io.connect('http://127.0.0.1:501/VirtualCoin');
-					window.socket.emit('Virtual', { 'data': 'test' ,'coinName':type});
-					//监听回复的消息
-					var that = this;
-					window.socket.on('Virtual', function (data) {
-						console.log(1111);
-						console.log(data.data.Body);
-						that.resList = data.data.Body.Items
-					});
+					//window.socket = io.connect('http://127.0.0.1:501/VirtualCoin');
+					//window.socket.emit('Virtual', { 'leave': '' });
+					window.socket.emit('Virtual', { 'coinName':type});
+					
 				}
 			}
 		});

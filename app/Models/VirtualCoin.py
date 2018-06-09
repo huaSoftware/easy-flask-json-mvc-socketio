@@ -1,7 +1,10 @@
 from app.Models.BaseModel import BaseModel
 import requests
 import json
+import time
 
+
+""" 虚拟货币模型 """
 class VirtualCoin(BaseModel):
     def getWsContent(self,CoinName):
       url = 'http://www.daoxiaoyue.com/ws/handle'
@@ -20,7 +23,11 @@ class VirtualCoin(BaseModel):
         'User-Agent': 'Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/65.0.3325.146 Safari/537.36',
         'X-Requested-With': 'XMLHttpRequest'
       }
-      res = requests.post(url, data=data, headers=headers)
-      data = json.loads(res.text)
-      return data
+      try:
+          res = requests.post(url, data=data, headers=headers)
+          datas = json.loads(res.text)
+          return datas
+      except:
+          return  {"Body":{"Itmes":[]}}
+       
   

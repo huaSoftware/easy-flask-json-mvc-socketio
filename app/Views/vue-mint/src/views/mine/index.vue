@@ -27,6 +27,7 @@
 </template>
 <script>
 import {register} from '@/api/user'
+import { Toast } from 'mint-ui'
 export default {
   data () {
     return {
@@ -53,7 +54,7 @@ export default {
     },
     handleRegister () {
       register(this.register_email, this.register_password1 ).then(res => {
-        
+        Toast(res.msg)
       })
     }
   },

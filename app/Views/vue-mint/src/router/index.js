@@ -35,7 +35,7 @@ const router = new Router({
       path: '/find',
       name: 'find',
       component: _import('find/index'),
-      meta: { title: '发现', header: true, back: true, more: true, footer: true }
+      meta: { title: '全局的两种存储方式', header: true, back: true, more: true, footer: true }
     },
     {
       path: '/function',

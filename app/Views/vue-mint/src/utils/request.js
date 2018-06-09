@@ -56,7 +56,7 @@ service.interceptors.response.use(
         Toast(res.msg)
       }
       // Toast('网络错误')
-      // return Promise.reject('error')
+      return Promise.reject('error')
     }
     if (res.error_code === 401 || res.error === false) {
       Toast(res.msg)
