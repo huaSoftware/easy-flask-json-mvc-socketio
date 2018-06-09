@@ -322,7 +322,7 @@ def documentUploadBase64():
     if(error is not True):
         return error
     #这边图片类型，大小判断请根据需求自己判断，暂不展开
-    for(k,v) in request.json.items():
+    for(k ,v) in request.json.items():
        userImg = v['imgBase64'].split(',')[1]
        imgdata = base64.b64decode(userImg)
        path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'

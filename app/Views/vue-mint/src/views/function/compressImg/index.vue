@@ -71,7 +71,7 @@ export default {
 		},
 		portrait:function(id) {
 			//呼出底部菜单
-			if(window.plus){
+			/* if(window.plus){
 	            var a=[{
 	                title:'拍照'
 	            },{
@@ -97,10 +97,10 @@ export default {
 	                        break;
 	                }
 	            },false);   
-	        }else{
+	        }else{ */
 	            let btn = document.getElementById(id);
 				btn.click();
-	        }
+	        //}
 		},
 		bind:function(id) {
             let that = this
@@ -145,7 +145,7 @@ export default {
         });
     },
     //从本地相册选择
-    galleryImages:function (){
+    galleryImages(){
         console.log("你选择了从相册选择");
         let that = this
         plus.gallery.pick(function(a){
@@ -183,42 +183,42 @@ export default {
         },{
             filter:'image'
         });
-	    },
-	     //上传图片
-	    uploadHeadImg:function (imgPath, id){
-            let that = this
-	        //选中图片之后，头像当前的照片变为选择的照片
-	        var mainImg=document.getElementById(id);
-	        mainImg.src=imgPath;
-	        var images=new Image();
-            images.src=imgPath;
-	        images.onload = function() { 
-              var imgData=that.getBase64Image(images,that.dict[id].size,that.dict[id].type);
-              that.dict[id].imgBase64 = imgData
-              console.log(that.dict)
-              //that.imgData.unshift(that.dict)
-		      /*ajax*/
-            /*  var url    = '/api/v2/member.user.img';
-            var data   = {'imgDatas':imgData,'url':GLOBAL_CONFIG['API_HOST']};
-            var type   = 'post';
-                var header = {'Content-Type':'application/json',
-                    'Authorization':GLOBAL_CONFIG['Authorization']};
-            var success = function(data){
-                if(resCheck(data)){		
-                    h('.loading').hide();
-                    mui.toast('上传成功！');
-                }
-                }; 
-            Request(url,data,success,type,header).ajax(); */
-			}
-	  },
+	},
+        //上传图片
+    uploadHeadImg:function (imgPath, id){
+        let that = this
+        //选中图片之后，头像当前的照片变为选择的照片
+        var mainImg=document.getElementById(id);
+        mainImg.src=imgPath;
+        var images=new Image();
+        images.src=imgPath;
+        images.onload = function() { 
+            var imgData=that.getBase64Image(images,that.dict[id].size,that.dict[id].type);
+            that.dict[id].imgBase64 = imgData
+            console.log(that.dict)
+            //that.imgData.unshift(that.dict)
+            /*ajax*/
+        /*  var url    = '/api/v2/member.user.img';
+        var data   = {'imgDatas':imgData,'url':GLOBAL_CONFIG['API_HOST']};
+        var type   = 'post';
+            var header = {'Content-Type':'application/json',
+                'Authorization':GLOBAL_CONFIG['Authorization']};
+        var success = function(data){
+            if(resCheck(data)){		
+                h('.loading').hide();
+                mui.toast('上传成功！');
+            }
+            }; 
+        Request(url,data,success,type,header).ajax(); */
+        }
+    },
     // 压缩图片转成base64
     getBase64Image:function (img, size ,type){
           console.log(img.width)
           if(size >307200){ //大于300KB就减少10倍长宽
               if(img.height >2000){
-                  var width=img.width / 10;
-                  var height=img.height / 10;
+                  var width=img.width / 5.5;
+                  var height=img.height / 5.5;
               }
               else if(img.height >1000) {
                   var width=img.width / 5;

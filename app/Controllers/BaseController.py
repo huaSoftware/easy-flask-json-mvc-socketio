@@ -26,7 +26,10 @@ class BaseController:
             rules, error_handler=CustomErrorHandlers(custom_messages=error_msg))
         #v = ObjectValidator(rules)
         #这边修改成json格式接收参数
-        requests = request.get_json()
+        try:
+            requests = request.values()
+        except TypeError:
+            requests = request.get_json()
         if (v.validate(requests)):  # validate
             return True
         error = {}
