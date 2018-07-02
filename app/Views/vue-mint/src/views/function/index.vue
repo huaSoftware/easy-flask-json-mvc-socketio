@@ -2,6 +2,7 @@
   <div class="content">
     <mt-cell title="mint功能" value="这里我们将展示mint的各种组件功能"></mt-cell>
     <router-link class="top" to="/function/compressImg">多图片压缩</router-link>
+    <router-link class="top" to= "/function/splitImg">分片压缩图片</router-link>
     <router-link class="top" to="/function/loadMore">上下拉加载</router-link>
     <router-link class="top" to="/function/infinite-scroll">无限加载</router-link>
     <router-link class="top" to="/function/spinner">加载效果</router-link>

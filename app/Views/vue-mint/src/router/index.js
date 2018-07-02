@@ -49,6 +49,11 @@ const router = new Router({
           meta: { title: '压缩图片', header: true, back: true, more: true, footer: true }
         },
         {
+          path: 'splitImg',
+          component: _import('function/compressImg/splitImg'),
+          meta: { title: '分片压缩图片', header: true, back: true, more: true, footer: true }
+        },
+        {
           path: 'loadMore',
           component: _import('function/load-more/index'),
           meta: { title: '上下拉加载', header: true, back: true, more: true, footer: true }

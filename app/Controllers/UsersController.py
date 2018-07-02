@@ -4,6 +4,7 @@ from app.Vendor.Utils import Utils
 from app.Models.Users import Users
 from app.Models.Suggest import Suggest
 from app.Models.Comments import Comments
+from app.Models.ImgShard import ImgShard
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from flask import request
 from werkzeug.utils import secure_filename
@@ -365,3 +366,85 @@ def commentsGet():
     pageSize = request.json.get('pageSize')
     data =Comments.getCommentsList(pageNo, pageSize)
     return BaseController().json(data)
+
+
+""" 接收图片分片数据并存入数据库 """
+
+
+@app.route('/api/v2/imgShard/save', methods=['post'])
+def imgShard():
+    rules = {
+        'index': {
+            'required': True,
+            'type': 'integer'
+        },
+        'uuid': {
+            'required': True,
+            'type': 'string'
+        },
+        'imgString': {
+            'required': True,
+            'type': 'string'
+        }
+    }
+    error_msg = {
+        'index': {
+            'required': u'图片索引是必须的',
+            'type': u'图片索引必须是字符串'
+        },
+        'uuid': {
+            'required': u'唯一id是必须的',
+            'type': u'唯一id必须是字符串'
+        },
+        'imgString': {
+            'required': u'当前页是必须的',
+            'type': u'当前页必须是字符串'
+        }
+    }
+    error = BaseController().validateInput(rules, error_msg)
+    if(error is not True):
+        return error
+    index = request.json.get('index')
+    uuid = request.json.get('uuid')
+    imgString = request.json.get('imgString')
+    data = ImgShard.add(index, uuid, imgString)
+    if data:
+        return BaseController().successData(data=0, msg='图片分片提交失败')
+    else:
+        return BaseController().successData(data=index, msg='图片分片提交成功')
+
+
+""" 接收图片uuid并转换成图片 """
+
+
+@app.route('/api/v2/imgShard/switch', methods=['post'])
+def imgSwitch():
+    rules = {
+        'uuid': {
+            'required': True,
+            'type': 'string'
+        }
+    }
+    error_msg = {
+        'uuid': {
+            'required': u'唯一id是必须的',
+            'type': u'唯一id必须是字符串'
+        }
+    }
+    error = BaseController().validateInput(rules, error_msg)
+    if(error is not True):
+        return error
+    uuid = request.json.get('uuid')
+    data = ImgShard.getData(uuid)
+    base64Data = ''
+    for i in data:
+        base64Data = base64Data + i['imgString']
+    userImg = base64Data.split(',')[1]
+    imgdata = base64.b64decode(userImg)
+    rela_path = "/uploads/"+Utils.uniqid()+'.jpg'
+    path = os.getcwd()+rela_path
+    file = open(path, 'wb')
+    file.write(imgdata)
+    file.close()
+    return BaseController().successData(data={"url": rela_path}, msg='图片提交成功')
+

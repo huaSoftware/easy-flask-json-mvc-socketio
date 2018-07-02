@@ -40,6 +40,21 @@ export function uploadBase64Img (data) {
   })
 }
 
+export function imgShard (data) {
+  return request({
+    url: '/api/v2/imgShard/save',
+    method: 'post',
+    data
+  })
+}
+
+export function imgSwitch (data) {
+  return request({
+    url: '/api/v2/imgShard/switch',
+    method: 'post',
+    data
+  })
+}
 export function getCommentList (data) {
   return request({
     url: '/api/v2/comments/get',
