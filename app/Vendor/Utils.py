@@ -44,12 +44,18 @@ class Utils:
             dict.update(obj.__dict__)
             return dict
 
-    """ 验证文件类型 """
+    """ 验证文件类型
+        @param string filename
+        return string path
+    """
     @staticmethod
     def allowed_file(filename):
         return '.' in filename and \
             filename.rsplit('.', 1)[1] in ALLOWED_EXTENSIONS
 
-    """ uuid,唯一id """
-    def uniqid(prefix=''):
+    """ uuid,唯一id 
+        return string id
+    """
+    @staticmethod
+    def unique_id(prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]

@@ -3,13 +3,17 @@
     基础模型，封装一些基础方法 
 '''
 import logging
-
+from app.Vendor.Code import Code
 
 class BaseModel():
-    SUCCESS = 200
-    BAD_REQUEST = 400
-    NOT_FOUND = 404
 
+    """ 
+    * 格式化分页
+    * @param int page
+    * @param int size
+    * @param int total
+    * @return dict 
+    """
     @staticmethod
     def formatPaged(page, size, total):
         if int(total) > int(page) * int(size):
@@ -23,42 +27,36 @@ class BaseModel():
             'more': more
         }
 
+    """ 
+    * 格式化返回体
+    * @param dict data
+    * @return dict
+    """
     @staticmethod
     def formatBody(data={}):
         dataformat = {}
-        dataformat['error_code'] = 200
+        dataformat['error_code'] = Code.SUCCESS
         dataformat['data'] = data
         return dataformat
 
-    def formatError(self, code, message=''):
-        if code == self.BAD_REQUEST:
+    """ 
+    * 格式化错误返回体
+    * @param int code
+    * @param string message
+    * @return dict
+    """
+    @staticmethod
+    def formatError(code, message=''):
+        if code == Code.BAD_REQUEST:
             message = 'Bad request.'
-        elif code == self.NOT_FOUND:
+        elif code == Code.NOT_FOUND:
             message = 'No result matched.'
         body = {}
         body['error'] = True
-        body['error_code'] = code
+        body['error_code'] = Code.BAD_REQUEST
         body['msg'] = message
         return body
 
-    def log(self):
-        logger = logging.getLogger("error_msg")
-        logger.setLevel(logging.DEBUG)
-        # 建立一个filehandler来把日志记录在文件里，级别为debug以上
-        fh = logging.FileHandler("spam.log")
-        fh.setLevel(logging.DEBUG)
-        # 建立一个streamhandler来把日志打在CMD窗口上，级别为error以上
-        ch = logging.StreamHandler()
-        ch.setLevel(logging.ERROR)
-        # 设置日志格式
-        formatter = logging.Formatter(
-            "%(asctime)s - %(name)s - %(levelname)s - %(message)s")
-        ch.setFormatter(formatter)
-        fh.setFormatter(formatter)
-        # 将相应的handler添加在logger对象中
-        logger.addHandler(ch)
-        logger.addHandler(fh)
-        return logger
 
 
 
