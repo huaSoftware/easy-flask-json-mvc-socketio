@@ -75,7 +75,6 @@ pylint==1.8.2
 PyMySQL==0.7.11
 PyNaCl==1.2.1
 pyparsing==2.2.0
-pypiwin32==219
 python-dateutil==2.6.1
 python-editor==1.0.3
 python-engineio==2.0.2
@@ -95,7 +94,6 @@ sshtunnel==0.1.2
 Tempita==0.5.2
 traitlets==4.3.2
 urllib3==1.22
-var-dump==1.1
 virtualenv==15.1.0
 wcwidth==0.1.7
 Werkzeug==0.12.2

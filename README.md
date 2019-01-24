@@ -1,8 +1,10 @@
+#### 项目介绍
 一套基于flask，vue的前后端分离的解决方案（献给从事web开发的pythoner）。
 
 人生苦短，我用python!
 
 
+#### 软件架构
 一.后端flask程序:
 
 	1.三个入口文件:
@@ -56,4 +58,8 @@
 
 		工具层:src/utils/*
 
-	
+#### 作者其他开源产品
+1. 工具鸡前端app项目 https://gitee.com/huashiyuting/tool_chicken
+
+#### 捐助作者
+![捐助作者](https://images.gitee.com/uploads/images/2019/0124/105407_661d1190_1588193.png "mm_facetoface_collect_qrcode_1548297043215.png")	
