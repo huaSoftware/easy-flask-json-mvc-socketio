@@ -33,10 +33,12 @@ class BaseModel():
     * @return dict
     """
     @staticmethod
-    def formatBody(data={}):
+    def formatBody(data={}, msg='', show=True):
         dataformat = {}
         dataformat['error_code'] = Code.SUCCESS
         dataformat['data'] = data
+        dataformat['msg'] = msg
+        dataformat['show'] = show
         return dataformat
 
     """ 
@@ -46,7 +48,7 @@ class BaseModel():
     * @return dict
     """
     @staticmethod
-    def formatError(code, message=''):
+    def formatError(code, message='', show=True):
         if code == Code.BAD_REQUEST:
             message = 'Bad request.'
         elif code == Code.NOT_FOUND:
@@ -55,6 +57,7 @@ class BaseModel():
         body['error'] = True
         body['error_code'] = Code.BAD_REQUEST
         body['msg'] = message
+        body['show'] = show
         return body
 
 

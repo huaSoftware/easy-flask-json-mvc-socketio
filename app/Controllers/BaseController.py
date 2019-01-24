@@ -65,15 +65,15 @@ class BaseController:
     * @param  msg string
     * @return json
     '''
-    def error(self, msg=''):
-        return self.json({'error_code': Code.BAD_REQUEST, 'error': True, 'msg': msg})
+    def error(self, msg='', show=True):
+        return self.json({'error_code': Code.BAD_REQUEST, 'error': True, 'msg': msg, 'show': show})
 
     '''
     * 返回成功信息
     * @param  msg string
     * @return json
     '''
-    def successData(self, data='', msg=''):
-        return self.json({'error_code': Code.SUCCESS, 'data': data,'msg': msg})
+    def successData(self, data='', msg='', show=True):
+        return self.json({'error_code': Code.SUCCESS, 'data': data,'msg': msg, 'show': show})
 
 
