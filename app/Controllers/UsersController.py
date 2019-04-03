@@ -22,7 +22,7 @@ def register(params):
     if(userData == None):
         user = Users(
             email=params['email'],
-            password=params['password'],
+            password=Users.set_password(params['password']),
             status=1)
         status = user.add(user)
         if status == True:
