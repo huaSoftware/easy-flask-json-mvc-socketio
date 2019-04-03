@@ -4,7 +4,7 @@
 人生苦短，我用python!
 
 #### 更新情况
-2019.4.3 增加事务，验证装饰器，demo在UsersController下
+- [x] 2019.4.3 增加事务，验证装饰器，demo在UsersController下
 
 #### 软件架构
 一.后端flask程序:
