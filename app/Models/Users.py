@@ -2,6 +2,7 @@ from app import db
 from app.Models.BaseModel import BaseModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy_serializer import SerializerMixin
+from app.Vendor.Decorator import classTransaction
 
 
 class Users(db.Model, BaseModel, SerializerMixin):
@@ -41,9 +42,10 @@ class Users(db.Model, BaseModel, SerializerMixin):
         return Users.query.filter_by(id=id).first()
 
     # 增加用户
+    @classTransaction
     def add(self, user):
         db.session.add(user)
-        return db.session.commit()
+        return True
 
     # 根据id删除用户
     def delete(self, id):

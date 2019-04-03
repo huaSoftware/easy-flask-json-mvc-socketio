@@ -6,58 +6,26 @@ from app.Models.Suggest import Suggest
 from app.Models.Comments import Comments
 from app.Models.ImgShard import ImgShard
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
+from app.Vendor.Decorator import validator
 from flask import request
 from werkzeug.utils import secure_filename
-import os
-import base64
+import os, base64
 
 ''' 注册 '''
 
 
 @app.route('/api/v2/register', methods=['POST'])
-def register():
-    rules = {
-        'email': {
-            'required': True,
-            'type': 'string',
-            'minlength': 10,
-            'maxlength': 20
-        },
-        'password': {
-            'required': True,
-            'type': 'string',
-            'minlength': 6,
-            'maxlength': 20
-        }
-    }
-    error_msg = {
-        'email': {
-            'required': u'邮箱是必须的',
-            'type': u'邮箱必须是字符串',
-            'minlength': u'邮箱必须大于10',
-            'maxlength': u'邮箱必须小于20'
-        },
-        'password': {
-            'required': u'密码是必须的',
-            'type': u'密码必须是字符串',
-            'minlength': u'密码必须大于6',
-            'maxlength': u'密码必须小于20'
-        }
-    }
-    error = BaseController().validateInput(rules, error_msg)
-    if(error is not True):
-        return error
-    email = request.json.get('email')
-    password = Users.set_password(request.json.get('password'))
-    
-    userData = Users.query.filter_by(email=email).first()
+@validator(name="email", rules={'required': True,'type': 'string','minlength': 10,'maxlength': 20}, msg= {'required': u'邮箱是必须的','type': u'邮箱必须是字符串','minlength': u'邮箱必须大于10','maxlength': u'邮箱必须小于20'})
+@validator(name="password", rules= {'required': True,'type': 'string','minlength': 6,'maxlength': 20}, msg= {'required': u'密码是必须的','type': u'密码必须是字符串','minlength': u'密码必须大于6','maxlength': u'密码必须小于20'})
+def register(params):
+    userData = Users.query.filter_by(email=params['email']).first()
     if(userData == None):
         user = Users(
-            email=email,
-            password=password,
+            email=params['email'],
+            password=params['password'],
             status=1)
-        user.add(user)
-        if user.id:
+        status = user.add(user)
+        if status == True:
             return BaseController().successData(msg='注册成功')
         return BaseController().error('注册失败')
     return BaseController().error('账号已注册')
