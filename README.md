@@ -1,3 +1,9 @@
+<!--
+ * @Author: hua
+ * @Date: 2018-08-30 10:52:11
+ * @LastEditors: hua
+ * @LastEditTime: 2019-05-21 09:36:10
+ -->
 #### 项目介绍
 一套基于flask，vue的前后端分离的解决方案（献给从事web开发的pythoner）。
 
@@ -61,8 +67,8 @@
 		工具层:src/utils/*
 
 #### 作者其他开源产品
-1. 工具鸡前端app项目 https://gitee.com/huashiyuting/tool_chicken
-2. 状态栏监听安卓客户端 https://gitee.com/huashiyuting/status_bar_monitor
-
+1. <a href="https://gitee.com/huashiyuting/tool_chicken" target="_blank">工具鸡前端app项目</a>
+2. <a href="https://gitee.com/huashiyuting/status_bar_monitor" target="_blank">状态栏监听安卓客户端 </a>
+3. <a href="https://gitee.com/huashiyuting/plainCms" target="_blank">plainCms</a>
 #### 捐助作者
 ![捐助作者](https://images.gitee.com/uploads/images/2019/0124/105407_661d1190_1588193.png "mm_facetoface_collect_qrcode_1548297043215.png")	
