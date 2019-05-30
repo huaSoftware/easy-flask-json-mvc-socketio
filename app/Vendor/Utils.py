@@ -1,8 +1,16 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@LastEditors: hua
+@LastEditTime: 2019-05-30 15:42:56
+'''
 ''' author:hua
     date:2018.5.9
     工具类，封装一些通用方法 
 '''
 from app.env import ALLOWED_EXTENSIONS
+from app.lang.zh_CN.validation import validation
+from app.Vendor.Code import Code
 import time
 
 class Utils:
@@ -59,3 +67,31 @@ class Utils:
     @staticmethod
     def unique_id(prefix=''):
         return prefix + hex(int(time.time()))[2:10] + hex(int(time.time() * 1000000) % 0x100000)[2:7]
+
+    """ 
+    * 格式化验证错误描述
+    * @param string name
+    * @param dict rules
+    * @param dict msg
+    * @return string
+    """
+    @staticmethod
+    def validateMsgFormat(name, rules, msg):
+        #根据规则生成返回
+        if not msg:
+            msgFormat = dict()
+            for key in  rules:
+                if key == 'required':
+                    ruleMsg = ''
+                    actionMsg = validation[key][rules[key]]
+                elif key == 'maxlength':
+                    ruleMsg = validation[key]
+                    actionMsg = rules[key]
+                elif key == 'minlength': 
+                    ruleMsg = validation[key]
+                    actionMsg = rules[key]
+                else:
+                    ruleMsg = validation[key]
+                    actionMsg = validation[rules[key]]
+                msgFormat[key] = "{} {} {}".format(validation[name], ruleMsg, actionMsg)
+        return msgFormat

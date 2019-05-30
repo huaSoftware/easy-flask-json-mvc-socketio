@@ -1,3 +1,9 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@LastEditors: hua
+@LastEditTime: 2019-05-30 15:15:12
+'''
 from app import app
 from app.Controllers.BaseController import BaseController
 from app.Vendor.Utils import Utils
@@ -15,8 +21,8 @@ import os, base64
 
 
 @app.route('/api/v2/register', methods=['POST'])
-@validator(name="email", rules={'required': True,'type': 'string','minlength': 10,'maxlength': 20}, msg= {'required': u'邮箱是必须的','type': u'邮箱必须是字符串','minlength': u'邮箱必须大于10','maxlength': u'邮箱必须小于20'})
-@validator(name="password", rules= {'required': True,'type': 'string','minlength': 6,'maxlength': 20}, msg= {'required': u'密码是必须的','type': u'密码必须是字符串','minlength': u'密码必须大于6','maxlength': u'密码必须小于20'})
+@validator(name="email", rules={'required': True,'type': 'string','minlength': 10,'maxlength': 20})
+@validator(name="password", rules= {'required': True,'type': 'string','minlength': 6,'maxlength': 20})
 def register(params):
     userData = Users.query.filter_by(email=params['email']).first()
     if(userData == None):
