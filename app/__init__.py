@@ -1,8 +1,15 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@LastEditors: hua
+@LastEditTime: 2019-05-30 14:46:08
+'''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
 #from flask_permissions.core import Permissions
 from flask_sqlalchemy import SQLAlchemy
 from flask_socketio import SocketIO
+from app.Vendor.ExceptionApi import ExceptionApi
 from app.env import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH
 import pymysql
 
@@ -22,6 +29,10 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER #上传目录
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH #上传大小
 # 初始化
 db = SQLAlchemy(app)
+#挂载500异常处理,并记录日志
+@app.errorhandler(Exception)
+def error_handler(e):
+    return ExceptionApi(Code.ERROR, e)
 #引入使用的控制器
 from app.Controllers import MusicController, UsersController, SocketController
 # 蓝图，新增的后台部分代码

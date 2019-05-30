@@ -1,6 +1,14 @@
+'''
+@Author: hua
+@Date: 2019-04-03 15:41:05
+@LastEditors: hua
+@LastEditTime: 2019-05-30 14:47:02
+'''
 from app import db
 from flask import request
 from functools import wraps
+from app.Vendor.Code import Code
+from app.Vendor.ExceptionApi import ExceptionApi
 from app.Controllers.BaseController import BaseController
 
 """ 
@@ -18,9 +26,9 @@ def transaction(func):
             #print('something after')
             return result
         except  Exception as e:
-            print(e)
+            #print(e)
             db.session.rollback()  
-            return False
+            return ExceptionApi(Code.ERROR, e)
     return inner_wrappar 
 
 """ 
@@ -38,9 +46,9 @@ def classTransaction(func):
             #print('something after')
             return result
         except  Exception as e:
-            print(e)
+            #print(e)
             db.session.rollback()  
-            return False
+            return ExceptionApi(Code.ERROR, e)
     return wrappar 
 
 """ 
