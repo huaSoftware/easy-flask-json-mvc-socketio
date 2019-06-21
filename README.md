@@ -73,5 +73,6 @@
 1. <a href="https://gitee.com/huashiyuting/tool_chicken" target="_blank">工具鸡前端app项目</a>
 2. <a href="https://gitee.com/huashiyuting/status_bar_monitor" target="_blank">状态栏监听安卓客户端 </a>
 3. <a href="https://gitee.com/huashiyuting/plainCms" target="_blank">plainCms</a>
+4. <a href="https://gitee.com/huashiyuting/Tool-Chicken-Chat"target="_blank">工具鸡-聊天室</a>
 #### 捐助作者
 ![捐助作者](https://images.gitee.com/uploads/images/2019/0124/105407_661d1190_1588193.png "mm_facetoface_collect_qrcode_1548297043215.png")	
