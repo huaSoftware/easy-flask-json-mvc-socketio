@@ -1,5 +1,12 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@description: 
+@LastEditors: hua
+@LastEditTime: 2019-07-08 08:57:38
+'''
 #mysql
-SQLALCHEMY_DATABASE_URI = 'mysql://root:1993524@localhost:3306/text?charset=utf8'
+SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1993524@localhost:3306/test?charset=utf8'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 #debug
 DEBUG_LOG = True

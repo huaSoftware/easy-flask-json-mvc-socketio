@@ -2,19 +2,18 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-05-30 14:46:08
+@LastEditTime: 2019-07-08 08:40:59
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
 #from flask_permissions.core import Permissions
-from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy import create_engine
+from sqlalchemy.orm import sessionmaker
 from flask_socketio import SocketIO
 from app.Vendor.Code import Code
 from app.Vendor.ExceptionApi import ExceptionApi
 from app.env import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH
-import pymysql
 
-pymysql.install_as_MySQLdb()
 #普通json带error_code风格使用此app示例
 app = Flask(__name__)
 #注册权限
@@ -28,14 +27,21 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = SQLALCHEMY_TRACK_MODIFICATIONS
 #上传文件配置
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER #上传目录 
 app.config['MAX_CONTENT_LENGTH'] = MAX_CONTENT_LENGTH #上传大小
-# 初始化
-db = SQLAlchemy(app)
+#创建数据库及连接
+engine = create_engine(SQLALCHEMY_DATABASE_URI)
+# 创建DBSession类型:
+DBSession = sessionmaker(bind=engine)
+dBSession = DBSession()
 #挂载500异常处理,并记录日志
 @app.errorhandler(Exception)
 def error_handler(e):
     return ExceptionApi(Code.ERROR, e)
+
+@socketio.on_error_default       # Handles the default namespace
+def error_handler(e):
+    return ExceptionApi(Code.ERROR, e)
 #引入使用的控制器
-from app.Controllers import MusicController, UsersController, SocketController
+from app.Controllers import  UsersController, SocketController, RestfulController, AdminController
 # 蓝图，新增的后台部分代码
 from app.Controllers.AdminController import admin
 app.register_blueprint(admin, url_prefix='/admin')

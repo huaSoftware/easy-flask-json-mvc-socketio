@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-05-30 15:15:12
+@LastEditTime: 2019-07-07 20:50:39
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -15,14 +15,19 @@ from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from app.Vendor.Decorator import validator
 from flask import request
 from werkzeug.utils import secure_filename
-import os, base64
+import os
+import base64
 
+""" 测试 """
+@app.route('/', methods=['GET'])
+def index():
+    return BaseController().successData(msg='启动成功')
 ''' 注册 '''
 
 
 @app.route('/api/v2/register', methods=['POST'])
-@validator(name="email", rules={'required': True,'type': 'string','minlength': 10,'maxlength': 20})
-@validator(name="password", rules= {'required': True,'type': 'string','minlength': 6,'maxlength': 20})
+@validator(name="email", rules={'required': True, 'type': 'string', 'minlength': 10, 'maxlength': 20})
+@validator(name="password", rules={'required': True, 'type': 'string', 'minlength': 6, 'maxlength': 20})
 def register(params):
     userData = Users.query.filter_by(email=params['email']).first()
     if(userData == None):
@@ -60,7 +65,7 @@ def login():
 
 @app.route('/api/v2/user', methods=['GET'])
 def get():
-    #鉴权
+    # 鉴权
     result = UsersAuthJWT().identify(request)
     if isinstance(result, str):
         return BaseController().error(result)
@@ -114,7 +119,7 @@ def userSuggestLeft():
     data_msg = Suggest.leftJoin()
     return BaseController().successData(data_msg)
 
-    
+
 """ 上传文件并验证
     https://zhuanlan.zhihu.com/p/23731819?refer=flask
 """
@@ -138,12 +143,12 @@ def documentUpload():
 
 @app.route('/api/v2//document/upload/base64', methods=['post'])
 def documentUploadBase64():
-    #二维数组验证
+    # 二维数组验证
     rules = {
-        'userImgOne': { 
+        'userImgOne': {
             'type': 'dict',
             'schema': {
-                'imgBase64':{
+                'imgBase64': {
                     'required': True,
                     'type': 'string',
                     'minlength': 2
@@ -164,7 +169,7 @@ def documentUploadBase64():
                     'minlength': 2
                 }
             }
-         },
+        },
         'userImgTwo': {
             'type': 'dict',
             'schema': {
@@ -213,17 +218,17 @@ def documentUploadBase64():
                     'type': 'string',
                     'minlength': 2
                 }
-            }   
+            }
         }
     }
     error_msg = {
         'userImgOne': {
             'type': 'dict',
             'schema': {
-                'imgBase64':{
-                'required': u'图一是必须的',
-                'type': u'图一必须是字符串',
-                'minlength': u'图一字符最小是2'
+                'imgBase64': {
+                    'required': u'图一是必须的',
+                    'type': u'图一必须是字符串',
+                    'minlength': u'图一字符最小是2'
                 },
                 'name': {
                     'required': u'图一是必须的',
@@ -270,7 +275,7 @@ def documentUploadBase64():
         'userImgThree': {
             'type': 'dict',
             'schema': {
-                'imgBase64':{
+                'imgBase64': {
                     'required': u'图三是必须的',
                     'type': u'图三必须是字符串',
                     'minlength': u'图三字符最小是2'
@@ -296,14 +301,14 @@ def documentUploadBase64():
     error = BaseController().validateInput(rules, error_msg)
     if(error is not True):
         return error
-    #这边图片类型，大小判断请根据需求自己判断，暂不展开
-    for(k ,v) in request.json.items():
-       userImg = v['imgBase64'].split(',')[1]
-       imgdata = base64.b64decode(userImg)
-       path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
-       file = open(path, 'wb')
-       file.write(imgdata)
-       file.close()
+    # 这边图片类型，大小判断请根据需求自己判断，暂不展开
+    for(k, v) in request.json.items():
+        userImg = v['imgBase64'].split(',')[1]
+        imgdata = base64.b64decode(userImg)
+        path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
+        file = open(path, 'wb')
+        file.write(imgdata)
+        file.close()
     """userImgOne = request.json.get('userImgOne')['imgBase64'].split(',')[1]
     userImgTwo = request.json.get('userImgTwo')['imgBase64'].split(',')[1]
     userImgThree = request.json.get('userImgThree')['imgBase64'].split(',')[1]
@@ -338,7 +343,7 @@ def commentsGet():
         return error
     pageNo = request.json.get('pageNo')
     pageSize = request.json.get('pageSize')
-    data =Comments.getCommentsList(pageNo, pageSize)
+    data = Comments.getCommentsList(pageNo, pageSize)
     return BaseController().json(data)
 
 
@@ -421,4 +426,3 @@ def imgSwitch():
     file.write(imgdata)
     file.close()
     return BaseController().successData(data={"url": rela_path}, msg='图片提交成功')
-

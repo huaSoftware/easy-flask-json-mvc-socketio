@@ -1,3 +1,10 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@description: 
+@LastEditors: hua
+@LastEditTime: 2018-08-30 10:52:23
+'''
 ''' author:hua
     date:2018.2.6
     基础模型，封装一些基础方法 

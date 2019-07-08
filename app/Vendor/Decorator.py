@@ -2,9 +2,9 @@
 @Author: hua
 @Date: 2019-04-03 15:41:05
 @LastEditors: hua
-@LastEditTime: 2019-05-30 15:33:42
+@LastEditTime: 2019-07-08 08:58:50
 '''
-from app import db
+from app import dBSession
 from flask import request, make_response
 from functools import wraps
 from app.Vendor.Code import Code
@@ -25,12 +25,12 @@ def transaction(func):
         try:
             #print('something before')
             result = func(*args, **kwargs)
-            db.session.commit()
+            dBSession.commit()
             #print('something after')
             return result
         except  Exception as e:
             #print(e)
-            db.session.rollback()  
+            dBSession.rollback()  
             return ExceptionApi(Code.ERROR, e)
     return inner_wrappar 
 
@@ -45,12 +45,12 @@ def classTransaction(func):
         try:
             #print('something before')
             result = func(self, *args, **kwargs)
-            db.session.commit()
+            dBSession.commit()
             #print('something after')
             return result
         except  Exception as e:
             #print(e)
-            db.session.rollback()  
+            dBSession.rollback()  
             return ExceptionApi(Code.ERROR, e)
     return wrappar 
 
@@ -114,4 +114,3 @@ def validator(name, rules, msg=dict(), default=""):
             return func(kwargs)
         return inner_wrappar 
     return wrappar
-

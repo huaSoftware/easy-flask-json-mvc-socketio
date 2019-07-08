@@ -20,7 +20,6 @@ Flask-Mail==0.9.1
 Flask-Migrate==2.4.0
 Flask-RESTful==0.3.7
 Flask-SocketIO==3.3.2
-Flask-SQLAlchemy==2.3.2
 future==0.17.1
 gevent==1.4.0
 greenlet==0.4.15
