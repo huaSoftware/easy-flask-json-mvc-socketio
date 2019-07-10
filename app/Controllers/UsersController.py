@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-10 08:55:03
+@LastEditTime: 2019-07-10 09:29:24
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -346,7 +346,7 @@ def commentsGet():
         return error
     pageNo = request.json.get('pageNo')
     pageSize = request.json.get('pageSize')
-    data = Comments.getCommentsList(pageNo, pageSize)
+    data = Comments().getCommentsList(pageNo, pageSize)
     return BaseController().json(data)
 
 

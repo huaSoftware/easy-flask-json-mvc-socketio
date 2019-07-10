@@ -60,8 +60,9 @@ export default {
     more() {
       getCommentList(this.searchCondition).then(res=>{
         this.searchCondition.pageNo++
-        this.pageList = this.pageList.concat(res.data.commentsList)
-        if(res.data.paged.more == 0){
+        console.log(res)
+        this.pageList = this.pageList.concat(res.list)
+        if(res.total_page*res.current_page > res.count){
            this.allLoaded = true;// 若数据已全部获取完毕
         }
       })
