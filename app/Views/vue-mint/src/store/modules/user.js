@@ -18,7 +18,7 @@ const user = {
           console.log(response)
           const data = response.data
           console.log(data.token)
-          Toast(response.data)
+          Toast(response.msg)
           // 存取token到localstorage
           setToken('token', data.token)
           // 存取user对象到localstorage

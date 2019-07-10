@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-07 20:50:39
+@LastEditTime: 2019-07-10 08:55:03
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -29,7 +29,10 @@ def index():
 @validator(name="email", rules={'required': True, 'type': 'string', 'minlength': 10, 'maxlength': 20})
 @validator(name="password", rules={'required': True, 'type': 'string', 'minlength': 6, 'maxlength': 20})
 def register(params):
-    userData = Users.query.filter_by(email=params['email']).first()
+    filters = {
+        Users.email == params['email']
+    }
+    userData = Users().getOne(filters)
     if(userData == None):
         user = Users(
             email=params['email'],

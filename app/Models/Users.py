@@ -3,9 +3,10 @@
 @Date: 2018-08-30 10:52:23
 @description: 
 @LastEditors: hua
-@LastEditTime: 2019-07-08 08:59:16
+@LastEditTime: 2019-07-10 08:52:14
 '''
 from app import dBSession
+from sqlalchemy import desc, asc
 from app.Models.BaseModel import BaseModel
 from werkzeug.security import generate_password_hash, check_password_hash
 from sqlalchemy_serializer import SerializerMixin
@@ -23,7 +24,28 @@ class Users(HtUser, BaseModel, SerializerMixin):
 
     """  def __str__(self):
         return "User(id='%s')" % self.id """
-
+    """
+        获取一条
+        @param set filters 查询条件
+        @param obj order 排序
+        @param tuple field 字段
+        @return dict
+    """
+    def getOne(self, filters, order = 'id desc', field = ()):
+        res = dBSession.query(Users).filter(*filters)
+        order = order.split(' ')
+        if order[1] == 'desc':
+            res = res.order_by(desc(order[0])).first()
+        else:
+            res = res.order_by(asc(order[0])).first()
+        if res == None:
+            return None
+        if not field:
+            res = res.to_dict()
+        else:
+           res = res.to_dict(only=field) 
+        return res
+    
     #设置密码
     @staticmethod
     def set_password(password):

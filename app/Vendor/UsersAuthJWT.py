@@ -1,3 +1,10 @@
+'''
+@Author: hua
+@Date: 2018-08-30 10:52:23
+@description: 
+@LastEditors: hua
+@LastEditTime: 2019-07-10 09:03:57
+'''
 from app.Controllers.BaseController import BaseController
 from app.Vendor.Utils import Utils
 from app.Models.Users import Users
@@ -62,17 +69,19 @@ class UsersAuthJWT():
         :param password:
         :return: json
         """
-        userInfo = Users.query.filter_by(email=email).first()
+        filters = {
+            Users.email == email
+        }
+        userInfo = Users().getOne(filters)
+        userInfoPas = Users().getOne(filters, order = 'id desc', field = ('password',))
         if(userInfo is None):
             return BaseController().error('找不到用户')
         else:
-            if (Users.check_password(userInfo.password, password)):
+            if (Users.check_password(userInfoPas['password'], password)):
                 updated_at = int(time.time())
                 Users.update(email, updated_at)
-                token = UsersAuthJWT.encode_auth_token(userInfo.id, updated_at)
-                users = userInfo.to_dict(
-                    extend=('-id', '-password'))
-                return BaseController().successData({'token': token.decode(), 'user': users}, '登陆成功')
+                token = UsersAuthJWT.encode_auth_token(userInfo['id'], updated_at)
+                return BaseController().successData({'token': token.decode(), 'user': userInfo}, '登陆成功')
             else:
                 return BaseController().error('密码不正确')
 
