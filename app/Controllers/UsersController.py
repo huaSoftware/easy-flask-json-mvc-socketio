@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-10 09:29:24
+@LastEditTime: 2019-07-24 09:58:38
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -18,17 +18,17 @@ from werkzeug.utils import secure_filename
 import os
 import base64
 
-""" 测试 """
 @app.route('/', methods=['GET'])
 def index():
+    """ 测试 """
     return BaseController().successData(msg='启动成功')
-''' 注册 '''
 
 
 @app.route('/api/v2/register', methods=['POST'])
 @validator(name="email", rules={'required': True, 'type': 'string', 'minlength': 10, 'maxlength': 20})
 @validator(name="password", rules={'required': True, 'type': 'string', 'minlength': 6, 'maxlength': 20})
 def register(params):
+    ''' 注册 '''
     filters = {
         Users.email == params['email']
     }
@@ -45,11 +45,9 @@ def register(params):
     return BaseController().error('账号已注册')
 
 
-''' 登录 '''
-
-
 @app.route('/api/v2/login', methods=['POST'])
 def login():
+    ''' 登录 '''
     email = request.json.get('email')
     password = request.json.get('password')
     if (not email or not password):
@@ -59,16 +57,13 @@ def login():
         return result
 
 
-'''
-*获取用户信息 
-*jwt中修改error处理方法,统一响应头
-*_default_jwt_error_handler
-'''
-
-
 @app.route('/api/v2/user', methods=['GET'])
 def get():
-    # 鉴权
+    '''
+    *获取用户信息 
+    *jwt中修改error处理方法,统一响应头
+    *_default_jwt_error_handler
+    '''
     result = UsersAuthJWT().identify(request)
     if isinstance(result, str):
         return BaseController().error(result)
@@ -83,53 +78,43 @@ def get():
     return BaseController().successData(returnUser)
 
 
-""" 不通过鉴权获取用户信息 """
-
-
 @app.route('/api/v2/userInfo', methods=['POST'])
 def getInfo():
+    """ 不通过鉴权获取用户信息 """
     id = request.json.get('id')
     data = Users.query.filter_by(id=id).all()
     datas = Utils.db_l_to_d(data)
     return BaseController().successData(datas)
 
 
-''' 查询用户留言记录，一对多
-'''
-
-
 @app.route('/api/v2/user/suggest', methods=['GET'])
 def userSuggest():
+    ''' 查询用户留言记录，一对多
+    '''
     data_msg = Suggest.on_to_many()
     return BaseController().successData(data_msg)
 
 
-# join
-
-
 @app.route('/api/v2/user/suggest/join', methods=['GET'])
 def userSuggestJoin():
+    # join
     data_msg = Suggest.join()
     print(data_msg)
     return BaseController().successData(data_msg)
 
-# left join
-# 如果想使用right join的话 把类颠倒下即可。
-
-
 @app.route('/api/v2/user/suggest/left', methods=['GET'])
 def userSuggestLeft():
+    # left join
+    # 如果想使用right join的话 把类颠倒下即可。
     data_msg = Suggest.leftJoin()
     return BaseController().successData(data_msg)
 
 
-""" 上传文件并验证
-    https://zhuanlan.zhihu.com/p/23731819?refer=flask
-"""
-
-
 @app.route('/api/v2/document/upload', methods=['POST'])
 def documentUpload():
+    """ 上传文件并验证
+    https://zhuanlan.zhihu.com/p/23731819?refer=flask
+    """
     files = request.files['document']
     filename = secure_filename(files.filename)
     if(files and Utils.allowed_file(filename)):
@@ -139,13 +124,11 @@ def documentUpload():
     return BaseController().error('文件类型错误')
 
 
-"""上传base64形式文件并杨峥
-    需要前端传入文件类型
-"""
-
-
 @app.route('/api/v2//document/upload/base64', methods=['post'])
 def documentUploadBase64():
+    """上传base64形式文件并杨峥
+    需要前端传入文件类型
+    """
     # 二维数组验证
     rules = {
         'userImgOne': {
@@ -350,11 +333,9 @@ def commentsGet():
     return BaseController().json(data)
 
 
-""" 接收图片分片数据并存入数据库 """
-
-
 @app.route('/api/v2/imgShard/save', methods=['post'])
 def imgShard():
+    """ 接收图片分片数据并存入数据库 """
     rules = {
         'index': {
             'required': True,
@@ -396,11 +377,9 @@ def imgShard():
         return BaseController().successData(data=index, msg='图片分片提交成功')
 
 
-""" 接收图片uuid并转换成图片 """
-
-
 @app.route('/api/v2/imgShard/switch', methods=['post'])
 def imgSwitch():
+    """ 接收图片uuid并转换成图片 """
     rules = {
         'uuid': {
             'required': True,

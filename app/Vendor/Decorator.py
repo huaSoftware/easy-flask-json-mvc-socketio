@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2019-04-03 15:41:05
 @LastEditors: hua
-@LastEditTime: 2019-07-08 08:58:50
+@LastEditTime: 2019-07-24 09:17:15
 '''
 from app import dBSession
 from flask import request, make_response
@@ -13,6 +13,7 @@ from app.Vendor.CustomErrorHandler import CustomErrorHandler
 from app.Vendor.ExceptionApi import ExceptionApi
 from app.Controllers.BaseController import BaseController
 import cerberus, json
+#禁止在app __init__, Vendor处调用，以免造成互相引用
 
 """ 
     事务装饰器,不能用于类方法

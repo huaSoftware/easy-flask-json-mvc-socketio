@@ -27,12 +27,14 @@ class HtImgShard(Base):
     index = Column(Integer, nullable=False)
 
 
-class HtMusic(Base):
-    __tablename__ = 'ht_music'
+class HtLog(Base):
+    __tablename__ = 'ht_logs'
 
     id = Column(Integer, primary_key=True)
-    add_time = Column(Integer, nullable=False)
-    content = Column(String(5000, 'utf8_unicode_ci'), nullable=False)
+    type = Column(Integer, nullable=False, server_default=FetchedValue())
+    level = Column(Integer, nullable=False, server_default=FetchedValue())
+    data = Column(Text, nullable=False)
+    create_time = Column(Integer, nullable=False)
 
 
 class HtSuggest(Base):

@@ -3,13 +3,15 @@
 @Date: 2018-08-30 10:52:23
 @description: 
 @LastEditors: hua
-@LastEditTime: 2019-07-08 08:57:38
+@LastEditTime: 2019-07-23 14:26:00
 '''
 #mysql
 SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://root:1993524@localhost:3306/test?charset=utf8'
 SQLALCHEMY_TRACK_MODIFICATIONS = True
 #debug
 DEBUG_LOG = True
+#log save 1为文件形式，2为数据库形式，默认数据库
+SAVE_LOG = 2
 #upload
 UPLOAD_FOLDER = '/uploads/'# 允许目录
 MAX_CONTENT_LENGTH = 16 * 1024 * 1024  # 允许大小16MB

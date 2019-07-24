@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-08 08:40:59
+@LastEditTime: 2019-07-24 09:55:17
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
@@ -11,7 +11,6 @@ from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_socketio import SocketIO
 from app.Vendor.Code import Code
-from app.Vendor.ExceptionApi import ExceptionApi
 from app.env import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH
 
 #普通json带error_code风格使用此app示例
@@ -32,6 +31,12 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 dBSession = DBSession()
+
+from app.Vendor.ExceptionApi import ExceptionApi
+""" @app.teardown_appcontext
+def shutdown_session(exception=None):
+    dBSession.close() """
+    
 #挂载500异常处理,并记录日志
 @app.errorhandler(Exception)
 def error_handler(e):
