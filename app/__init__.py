@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-24 09:55:17
+@LastEditTime: 2019-07-25 08:41:27
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
@@ -33,9 +33,9 @@ DBSession = sessionmaker(bind=engine)
 dBSession = DBSession()
 
 from app.Vendor.ExceptionApi import ExceptionApi
-""" @app.teardown_appcontext
+@app.teardown_appcontext
 def shutdown_session(exception=None):
-    dBSession.close() """
+    dBSession.close()
     
 #挂载500异常处理,并记录日志
 @app.errorhandler(Exception)
