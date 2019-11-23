@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-24 09:58:38
+@LastEditTime: 2019-11-23 15:40:15
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -75,7 +75,8 @@ def get():
             'email': user.email,
             'login_time': user.updated_at
         }
-    return BaseController().successData(returnUser)
+        return BaseController().successData(returnUser)
+    return BaseController().error('未找到用户')
 
 
 @app.route('/api/v2/userInfo', methods=['POST'])
@@ -291,7 +292,7 @@ def documentUploadBase64():
     for(k, v) in request.json.items():
         userImg = v['imgBase64'].split(',')[1]
         imgdata = base64.b64decode(userImg)
-        path = os.getcwd()+"/uploads/"+Utils.uniqid()+'.jpg'
+        path = os.getcwd()+"/uploads/"+Utils.unique_id()+'.jpg'
         file = open(path, 'wb')
         file.write(imgdata)
         file.close()
@@ -402,7 +403,7 @@ def imgSwitch():
         base64Data = base64Data + i['imgString']
     userImg = base64Data.split(',')[1]
     imgdata = base64.b64decode(userImg)
-    rela_path = "/uploads/"+Utils.uniqid()+'.jpg'
+    rela_path = "/uploads/"+Utils.unique_id()+'.jpg'
     path = os.getcwd()+rela_path
     file = open(path, 'wb')
     file.write(imgdata)

@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-05-30 15:42:56
+@LastEditTime: 2019-11-23 15:40:39
 '''
 ''' author:hua
     date:2018.5.9
@@ -94,4 +94,5 @@ class Utils:
                     ruleMsg = validation[key]
                     actionMsg = validation[rules[key]]
                 msgFormat[key] = "{} {} {}".format(validation[name], ruleMsg, actionMsg)
-        return msgFormat
+            return msgFormat
+        return msg
