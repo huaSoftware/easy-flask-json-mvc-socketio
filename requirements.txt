@@ -4,7 +4,7 @@ aniso8601==6.0.0
 asn1crypto==0.24.0
 Babel==2.6.0
 blinker==1.4
-Cerberus==1.2
+Cerberus==1.0.1
 certifi==2019.3.9
 cffi==1.12.2
 chardet==3.0.4

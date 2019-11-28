@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-07-25 08:41:27
+@LastEditTime: 2019-11-28 20:32:43
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
@@ -12,7 +12,12 @@ from sqlalchemy.orm import sessionmaker
 from flask_socketio import SocketIO
 from app.Vendor.Code import Code
 from app.env import SQLALCHEMY_DATABASE_URI, SQLALCHEMY_TRACK_MODIFICATIONS, UPLOAD_FOLDER, MAX_CONTENT_LENGTH
+import os, json
 
+#读取启动环境
+with open(os.getcwd()+'/.runtime/environment.json', "r") as f:
+    environment = json.loads(f.read())['environment']
+    
 #普通json带error_code风格使用此app示例
 app = Flask(__name__)
 #注册权限
@@ -38,15 +43,21 @@ def shutdown_session(exception=None):
     dBSession.close()
     
 #挂载500异常处理,并记录日志
-@app.errorhandler(Exception)
-def error_handler(e):
-    return ExceptionApi(Code.ERROR, e)
+if environment == 'run' or environment == 'restful':
+    @app.errorhandler(Exception)
+    def error_handler(e):
+        return ExceptionApi(Code.ERROR, e)
 
-@socketio.on_error_default       # Handles the default namespace
-def error_handler(e):
-    return ExceptionApi(Code.ERROR, e)
+if environment == 'socket':
+    @socketio.on_error_default       # Handles the default namespace
+    def error_handler(e):
+        return ExceptionApi(Code.ERROR, e)
 #引入使用的控制器
-from app.Controllers import  UsersController, SocketController, RestfulController, AdminController
-# 蓝图，新增的后台部分代码
-from app.Controllers.AdminController import admin
-app.register_blueprint(admin, url_prefix='/admin')
+if environment == 'run' or environment == 'restful':
+    from app.Controllers import  UsersController, RestfulController, AdminController
+    # 蓝图，新增的后台部分代码
+    from app.Controllers.AdminController import admin
+    app.register_blueprint(admin, url_prefix='/admin')
+if environment == 'socket':
+    #引入socketio控制层
+    from app.Controllers import SocketController
