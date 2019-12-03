@@ -3,7 +3,7 @@
 @Date: 2018-08-30 10:52:23
 @description: 
 @LastEditors: hua
-@LastEditTime: 2019-07-10 09:31:05
+@LastEditTime: 2019-12-03 13:03:56
 '''
 from app import dBSession
 from app.Models.BaseModel import BaseModel
@@ -51,7 +51,7 @@ class Comments(HtComment, BaseModel, SerializerMixin):
             offset = (offset - 1) * limit
 
         if res['page']['count'] > 0:
-            res['list'] = dBSession.query(UserRoomRelation).filter(*filters)
+            res['list'] = dBSession.query(Comments).filter(*filters)
             res['list'] = res['list'].order_by(order).offset(offset).limit(limit).all()
         if not field:
             res['list'] = [c.to_dict() for c in res['list']]

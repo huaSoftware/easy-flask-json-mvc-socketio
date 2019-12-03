@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-11-23 15:40:15
+@LastEditTime: 2019-12-03 14:13:31
 '''
 from app import app
 from app.Controllers.BaseController import BaseController
@@ -11,16 +11,21 @@ from app.Models.Users import Users
 from app.Models.Suggest import Suggest
 from app.Models.Comments import Comments
 from app.Models.ImgShard import ImgShard
+from app.Models.Log import Log
 from app.Vendor.UsersAuthJWT import UsersAuthJWT
 from app.Vendor.Decorator import validator
 from flask import request
 from werkzeug.utils import secure_filename
-import os
-import base64
-
+import os, base64
+        
 @app.route('/', methods=['GET'])
 def index():
     """ 测试 """
+    Log().add({
+        "type":1,
+        "level":1,
+        "data":"1"
+    })
     return BaseController().successData(msg='启动成功')
 
 

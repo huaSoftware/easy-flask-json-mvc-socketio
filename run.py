@@ -3,7 +3,7 @@
 @Date: 2018-08-30 10:52:11
 @description: 
 @LastEditors: hua
-@LastEditTime: 2019-11-28 20:33:19
+@LastEditTime: 2019-12-03 13:45:57
 '''
 import os,json
 path = os.getcwd()+'/.runtime/environment.json'
@@ -11,7 +11,7 @@ data = {"environment":"run"}
 with open(path, "w") as f:
     f.write(json.dumps(data))
     
-from app import app, socketio
+from app import app
 from flask_cors import CORS
 # https://www.cnblogs.com/franknihao/p/7202253.html uwsgi配置
 app = app

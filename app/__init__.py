@@ -2,7 +2,7 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-11-28 20:32:43
+@LastEditTime: 2019-12-03 14:17:25
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
@@ -61,3 +61,5 @@ if environment == 'run' or environment == 'restful':
 if environment == 'socket':
     #引入socketio控制层
     from app.Controllers import SocketController
+#引入数据库事件
+from app.Event import Log
