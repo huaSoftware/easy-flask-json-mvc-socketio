@@ -2,11 +2,12 @@
 @Author: hua
 @Date: 2018-08-30 10:52:23
 @LastEditors: hua
-@LastEditTime: 2019-12-03 14:17:25
+@LastEditTime: 2019-12-12 13:50:16
 '''
 from flask import Flask
 #权限模块 https://github.com/raddevon/flask-permissions
 #from flask_permissions.core import Permissions
+from apscheduler.schedulers.blocking import BlockingScheduler
 from sqlalchemy import create_engine
 from sqlalchemy.orm import sessionmaker
 from flask_socketio import SocketIO
@@ -36,7 +37,6 @@ engine = create_engine(SQLALCHEMY_DATABASE_URI)
 # 创建DBSession类型:
 DBSession = sessionmaker(bind=engine)
 dBSession = DBSession()
-
 from app.Vendor.ExceptionApi import ExceptionApi
 @app.teardown_appcontext
 def shutdown_session(exception=None):
@@ -63,3 +63,10 @@ if environment == 'socket':
     from app.Controllers import SocketController
 #引入数据库事件
 from app.Event import Log
+
+#任务调剂
+sched = BlockingScheduler()
+#引入任务
+from app.Job import Cron, Interval
+#开始任务
+sched.start()
