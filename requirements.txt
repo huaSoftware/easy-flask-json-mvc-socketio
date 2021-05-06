@@ -15,7 +15,7 @@ eventlet==0.24.1
 Flask==1.0.2
 Flask-Babel==0.12.2
 Flask-Builder==0.9
-Flask-Cors==3.0.7
+Flask-Cors==3.0.9
 Flask-Mail==0.9.1
 Flask-Migrate==2.4.0
 Flask-RESTful==0.3.7
