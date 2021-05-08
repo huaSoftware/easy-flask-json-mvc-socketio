@@ -11,7 +11,7 @@ chardet==3.0.4
 Click==7.0
 cryptography==2.6.1
 dnspython==1.16.0
-eventlet==0.24.1
+eventlet==0.31.0
 Flask==1.0.2
 Flask-Babel==0.12.2
 Flask-Builder==0.9
